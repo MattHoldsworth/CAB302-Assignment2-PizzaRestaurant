@@ -256,22 +256,24 @@ public class PizzaTests {
 	
 	//Border test
 	@Test
-	public void margheritaTenMinutesToCook() throws PizzaException{
+	public void margheritaDeliveryAfter10Minutes() throws PizzaException{
 		deliveryTime = orderTime.plusMinutes(COOKING_TIME);
 		margherita = new MargheritaPizza(quantity, orderTime, deliveryTime);
 	}
 	
 	@Test
-	public void meatLoversTenMinutesToCook() throws PizzaException{
+	public void meatLoversDeliveryAfter10Minutes() throws PizzaException{
 		deliveryTime = orderTime.plusMinutes(COOKING_TIME);
 		meatLovers = new MeatLoversPizza(quantity, orderTime, deliveryTime);
 	}
 	
 	@Test
-	public void vegetarianTenMinutesToCook() throws PizzaException{
+	public void vegetarianDeliveryAfter10Minutes() throws PizzaException{
 		deliveryTime = orderTime.plusMinutes(COOKING_TIME);
 		vegetarian = new VegetarianPizza(quantity, orderTime, deliveryTime);
 	}
+	
+	//Delivery time precedes order time - Not implemented
 	
 	//If the delivery is made after 1 hour from when the pizza is cooked (10 minutes after ordertime)
 	@Test (expected = PizzaException.class)
