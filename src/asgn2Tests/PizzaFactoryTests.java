@@ -53,9 +53,10 @@ public class PizzaFactoryTests {
 		PizzaFactory.getPizza("", quantity, orderTime, deliveryTime);
 	}
 	
+	//Pizza code should be 3 characters
 	@Test (expected = PizzaException.class)
-	public void fourLetters() throws PizzaException{
-		PizzaFactory.getPizza("PZMM", quantity, orderTime, deliveryTime);
+	public void fourCharacters() throws PizzaException{
+		PizzaFactory.getPizza("PZVM", quantity, orderTime, deliveryTime);
 	}
 	
 	@Test (expected = PizzaException.class)
@@ -63,9 +64,15 @@ public class PizzaFactoryTests {
 		PizzaFactory.getPizza("PZW", quantity, orderTime, deliveryTime);
 	}
 	
+	//Pizza code should be uppercase
 	@Test (expected = PizzaException.class)
 	public void lowerCaseCodeString() throws PizzaException{
 		PizzaFactory.getPizza("pzm", quantity, orderTime, deliveryTime);
+	}
+	
+	@Test (expected = PizzaException.class)
+	public void numericString() throws PizzaException{
+		PizzaFactory.getPizza("1", quantity, orderTime, deliveryTime);
 	}
 	
 	//Test if correct subclass pizza objects are instantiated
@@ -87,11 +94,49 @@ public class PizzaFactoryTests {
 		assertEquals(true, vegetarian.equals(vegetarian2));
 	}
 	
-	//Make sure PizzaFactory rethrows the PizzaException from pizza objects
+	//Make sure PizzaFactory propagates the PizzaException from pizza objects
 	@Test (expected = PizzaException.class)
 	public void quantityMoreThanTen() throws PizzaException{
 		quantity = 11;
-		margherita = new MargheritaPizza(quantity, orderTime, deliveryTime);
+		Pizza vegetarian2 = PizzaFactory.getPizza(VEGETARIAN, quantity, orderTime, deliveryTime);
+	}
+	
+	@Test (expected = PizzaException.class)
+	public void quantityLessThanOne() throws PizzaException{
+		quantity = 0;
+		Pizza meatLovers2 = PizzaFactory.getPizza(MEATLOVERS, quantity, orderTime, deliveryTime);
+	}
+	
+	@Test (expected = PizzaException.class)
+	public void orderBefore7() throws PizzaException{
+		orderTimeString = "17:30:00";
+		orderTime = LocalTime.parse(orderTimeString);
+		deliveryTime = orderTime.plusMinutes(29);
+		Pizza meatLovers2 = PizzaFactory.getPizza(MEATLOVERS, quantity, orderTime, deliveryTime);
+	}
+	
+	@Test (expected = PizzaException.class)
+	public void orderAfter11() throws PizzaException{
+		orderTimeString = "23:10:00";
+		orderTime = LocalTime.parse(orderTimeString);
+		deliveryTime = orderTime.plusMinutes(29);
+		Pizza meatLovers2 = PizzaFactory.getPizza(MEATLOVERS, quantity, orderTime, deliveryTime);
+	}
+	
+	@Test (expected = PizzaException.class)
+	public void deliveryBefore10Minutes() throws PizzaException{
+		orderTimeString = "20:10:00";
+		orderTime = LocalTime.parse(orderTimeString);
+		deliveryTime = orderTime.plusMinutes(5);
+		Pizza meatLovers2 = PizzaFactory.getPizza(MEATLOVERS, quantity, orderTime, deliveryTime);
+	}
+	
+	@Test (expected = PizzaException.class)
+	public void deliveryAfterAnHour() throws PizzaException{
+		orderTimeString = "20:10:00";
+		orderTime = LocalTime.parse(orderTimeString);
+		deliveryTime = orderTime.plusMinutes(75);
+		Pizza meatLovers2 = PizzaFactory.getPizza(MEATLOVERS, quantity, orderTime, deliveryTime);
 	}
 }
 

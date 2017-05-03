@@ -2,6 +2,7 @@ package asgn2Tests;
 
 import static org.junit.Assert.*;
 
+
 import java.time.LocalTime;
 
 import org.junit.Before;
@@ -184,7 +185,7 @@ public class PizzaTests {
 		deliveryTime = orderTime.plusMinutes(20);
 		vegetarian = new VegetarianPizza(quantity, orderTime, deliveryTime);
 	}
-	//Test if delivery after 11:00pm is allowed - not implemented
+	//Test if delivery after 11:00pm is allowed - not implemented Already tested 
 	
 	//Border value tests for order time
 	@Test
@@ -275,7 +276,7 @@ public class PizzaTests {
 	
 	//Delivery time precedes order time - Not implemented
 	
-	//If the delivery is made after 1 hour from when the pizza is cooked (10 minutes after ordertime)
+	//If the delivery is made after 1 hour from when the pizza is ready (10 minutes after ordertime + 1 hr)
 	@Test (expected = PizzaException.class)
 	public void margheritaPizzaThrownOut() throws PizzaException{
 		deliveryTime = orderTime.plusMinutes(COOKING_TIME + MAXIMUM_DELIVERY_TIME);
@@ -294,7 +295,7 @@ public class PizzaTests {
 		vegetarian = new VegetarianPizza(quantity, orderTime, deliveryTime);
 	}
 	
-	//If the delivery is within 1 hour from when the pizza is cooked (10 minutes after ordertime)
+	//If the delivery is within 1 hour from when the pizza is ready
 	@Test
 	public void margheritaMaxDeliveryTime() throws PizzaException{
 		deliveryTime = orderTime.plusMinutes(COOKING_TIME + MAXIMUM_DELIVERY_TIME - 1);
@@ -395,13 +396,13 @@ public class PizzaTests {
 	
 	@Test
 	public void meatLoversOrderProfit(){
-		double orderProfit = (MEATLOVERS_PRICE - MARGHERITA_COST) * quantity;
+		double orderProfit = (MEATLOVERS_PRICE - MEATLOVERS_COST) * quantity;
 		assertEquals(orderProfit, meatLovers.getOrderProfit(), 0);
 	}
 	
 	@Test
 	public void vegetarianOrderProfit(){
-		double orderProfit = (VEGETARIAN_PRICE - MARGHERITA_COST) * quantity;
+		double orderProfit = (VEGETARIAN_PRICE - VEGETARIAN_COST) * quantity;
 		assertEquals(orderProfit, vegetarian.getOrderProfit(), 0);
 	}
 	
