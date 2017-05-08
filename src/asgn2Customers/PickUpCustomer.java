@@ -26,8 +26,12 @@ public class PickUpCustomer extends Customer {
 	 * @throws CustomerException if supplied parameters are invalid
 	 * 
 	 */
+	final static String TYPE = "Pick Up";
 	public PickUpCustomer(String name, String mobileNumber, int locationX,  int locationY) throws CustomerException {
-		// TO DO	
+		super(name, mobileNumber, locationX, locationY, TYPE);
+		if (locationX != 0 || locationY != 0){
+			throw new CustomerException("Invalid pick up customer location");
+		}
 	}
 
 	/**
@@ -37,7 +41,7 @@ public class PickUpCustomer extends Customer {
 	 */
 	@Override
 	public double getDeliveryDistance() {
-		// TO DO
+		return 0;
 	}
 
 }

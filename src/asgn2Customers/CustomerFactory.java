@@ -1,6 +1,10 @@
 package asgn2Customers;
 
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import asgn2Exceptions.CustomerException;
 
 /**
@@ -27,7 +31,24 @@ public class CustomerFactory {
 	 * @return A valid PickUpCustomer, DriverDeliveryCustomer or DroneDeliveryCustomer depending on the customerCode.
 	 * @throws CustomerException if the customerCode is not one of the three valid codes listed in Section 5.3 of the Assignment Specification. 
 	 */
+		final static Set<String> CODES= new HashSet<String>(Arrays.asList(new String[]{"PUC", "DNC", "DVC"}));
 	public static Customer getCustomer(String customerCode, String name, String mobileNumber, int locationX,  int locationY) throws CustomerException{
-		// TO DO
+		if(!CODES.contains(customerCode)){
+			throw new CustomerException("Invalid customer code");
+		}
+		try{
+			if (customerCode == "PUC"){
+				PickUpCustomer puc = new PickUpCustomer(name, mobileNumber, locationX, locationY);
+				return puc;
+			} else if (customerCode == "DNC") {
+				DroneDeliveryCustomer dnc = new DroneDeliveryCustomer(name, mobileNumber, locationX, locationY);
+				return dnc;
+			} else {
+				DriverDeliveryCustomer dvc = new DriverDeliveryCustomer(name, mobileNumber, locationX, locationY);
+				return dvc;
+			}
+		} catch (Exception e){
+			throw new CustomerException(e.getMessage());
+		}
 	}
 }

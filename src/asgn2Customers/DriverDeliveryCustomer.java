@@ -27,8 +27,12 @@ public class DriverDeliveryCustomer extends Customer {
 	 * @throws CustomerException if supplied parameters are invalid
 	 * 
 	 */
+	final static String TYPE = "Driver Delivery";
 	public DriverDeliveryCustomer(String name, String mobileNumber, int locationX, int locationY) throws CustomerException {
-		// TO DO
+		super(name, mobileNumber, locationX, locationY, TYPE);
+		if (locationX == 0 && locationY ==0){
+			throw new CustomerException("Invalid driver delivery customer location");
+		}
 	}
 	
 	/**
@@ -38,6 +42,10 @@ public class DriverDeliveryCustomer extends Customer {
 	 * @return The distance between the restaurant and the customer in Manhattan distance.
 	 */
 	@Override
-	public double getDeliveryDistance() {	}
+	public double getDeliveryDistance() {
+		double distance;	
+		distance = Math.abs(locationX - RESTAURANT_X) + Math.abs(locationY - RESTAURANT_Y);
+		return distance;
+	}
 
 }

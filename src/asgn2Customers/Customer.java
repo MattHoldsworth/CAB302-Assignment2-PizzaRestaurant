@@ -1,5 +1,9 @@
 package asgn2Customers;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import asgn2Exceptions.CustomerException;
 
 /** An abstract class to represent a customer at the Pizza Palace restaurant.
@@ -30,8 +34,36 @@ public abstract class Customer {
 	 * @throws CustomerException if supplied parameters are invalid 
 	 * 
 	 */
+	final static int MIN_NAME_LENGTH = 1;
+	final static int MAX_NAME_LENGTH = 20;
+	final static int MOBILE_NUM_LENGTH = 10;
+	final static double RESTAURANT_X = 0;
+	final static double RESTAURANT_Y = 0;
+	String name;
+	String mobileNumber;
+	int locationX;
+	int locationY;
+	String type;
+	final static Set<String> TYPES= new HashSet<String>(Arrays.asList(new String[]{"Pick Up", "Driver Delivery", "Drone Delivery"}));
+	
 	public Customer(String name, String mobileNumber, int locationX, int locationY, String type) throws CustomerException{
-		// TO DO
+		String nameRegex = "[a-zA-Z]+";
+		String mobileRegex = "[0-9]+";
+			//if length of the name is 0, or more than 20, or only contains space(or has non-alphabet characters), 
+		if ((name.length()<MIN_NAME_LENGTH) || (name.length()>MAX_NAME_LENGTH) || !name.matches(nameRegex)){
+			throw new CustomerException("Invalid customer name");
+			//
+		} else if (!TYPES.contains(type)){
+			throw new CustomerException("Invalid customer type");
+			//if the length of the mobile number is not 10, or if the mobile number does not start with '0' or if the string contains non-numeric characters
+		} else if (mobileNumber.length()!= MOBILE_NUM_LENGTH || mobileNumber.toCharArray()[0] != '0' || !type.matches(mobileRegex)){
+			throw new CustomerException("Invalid mobile number");
+		}
+		this.name = name;
+		this.mobileNumber = mobileNumber;
+		this.locationX = locationX;
+		this.locationY = locationY;
+		this.type = type;
 	}
 	
 	/**
@@ -39,7 +71,7 @@ public abstract class Customer {
 	 * @return The Customer's name.
 	 */
 	public final String getName(){
-		// TO DO
+		return this.name;
 	}
 	
 	/**
@@ -47,7 +79,7 @@ public abstract class Customer {
 	 * @return The Customer's mobile number.
 	 */
 	public final String getMobileNumber(){
-		// TO DO
+		return this.mobileNumber;
 	}
 
 	/**
@@ -56,7 +88,7 @@ public abstract class Customer {
 	 * @return A human understandable description of the Customer's type.
 	 */
 	public final String getCustomerType(){
-		// TO DO
+		return this.type;
 	}
 	
 	/**
@@ -65,7 +97,7 @@ public abstract class Customer {
 	 * @return The Customer's X location
 	 */
 	public final int getLocationX(){
-		// TO DO
+		return this.locationX;
 	}
 
 	/**
@@ -74,7 +106,7 @@ public abstract class Customer {
 	 * @return The Customer's Y location
 	 */
 	public final int getLocationY(){
-		// TO DO
+		return this.locationY;
 	}
 
 	/**

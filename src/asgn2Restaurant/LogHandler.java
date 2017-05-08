@@ -1,8 +1,13 @@
 package asgn2Restaurant;
 
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
+
 import asgn2Customers.Customer;
+import asgn2Customers.CustomerFactory;
 import asgn2Exceptions.CustomerException;
 import asgn2Exceptions.LogHandlerException;
 import asgn2Exceptions.PizzaException;
@@ -19,18 +24,32 @@ import asgn2Pizzas.Pizza;
  */
 public class LogHandler {
 	
-
-
+	final static int LOG_STRING_NUM_PARAMETERS = 9;
+	final static String COMMA = ",";
 	/**
 	 * Returns an ArrayList of Customer objects from the information contained in the log file ordered as they appear in the log file.
 	 * @param filename The file name of the log file
 	 * @return an ArrayList of Customer objects from the information contained in the log file ordered as they appear in the log file. 
 	 * @throws CustomerException If the log file contains semantic errors leading that violate the customer constraints listed in Section 5.3 of the Assignment Specification or contain an invalid customer code (passed by another class).
 	 * @throws LogHandlerException If there was a problem with the log file not related to the semantic errors above
+	 * @throws FileNotFoundException 
 	 * 
 	 */
-	public static ArrayList<Customer> populateCustomerDataset(String filename) throws CustomerException, LogHandlerException{
-		// TO DO
+	public static ArrayList<Customer> populateCustomerDataset(String filename) throws CustomerException, LogHandlerException{		 
+		 try{
+			 ArrayList<Customer> customers = new ArrayList<Customer>();
+			 BufferedReader br = new BufferedReader(new FileReader(filename));
+			 String line = br.readLine(); 
+			 while (line != null){
+				 customers.add(createCustomer(line));
+				 line = br.readLine();	 
+			 }
+			 return customers;
+		 } catch (CustomerException e){
+			 throw new CustomerException(e.getMessage());
+		 } catch (Exception e){
+			 throw new LogHandlerException(e.getMessage());
+		 }
 	}		
 
 	/**
@@ -55,7 +74,28 @@ public class LogHandler {
 	 * @throws LogHandlerException - If there was a problem parsing the line from the log file.
 	 */
 	public static Customer createCustomer(String line) throws CustomerException, LogHandlerException{
-		// TO DO
+		if (line == "" || !line.contains(Character.toString(','))){
+			throw new LogHandlerException();
+		}
+		String[] parameters = line.split(COMMA);
+		if (parameters.length != LOG_STRING_NUM_PARAMETERS){
+			throw new LogHandlerException("The line does not contain the right number of parameters");
+		}
+		
+		try {
+			String code = parameters[4];
+			String name = parameters[2];
+			String mobile = parameters[3];		
+			int locX = Integer.parseInt(parameters[5]);
+			int locY = Integer.parseInt(parameters[6]);
+			
+			Customer newCustomer = CustomerFactory.getCustomer(code, name, mobile, locX, locY);
+			return newCustomer;
+		} catch (CustomerException e){
+			throw new CustomerException(e.getMessage());
+		} catch (Exception e){
+			throw new LogHandlerException(e.getMessage());
+		}
 	}
 	
 	/**

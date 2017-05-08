@@ -36,16 +36,22 @@ public class RestaurantPizzaTests {
 	//This is the 8th order in the log file
 	String logFile = ".\\logs\\20170103.txt";
 	String orderString = "22:16:00,22:31:00,Olivia Williams,0771390439,PUC,0,0,PZM,3";
-	int orderNumber = 8;
+	int orderNumber;
 	Pizza order;
 	PizzaRestaurant pizzaRestaurant;
+	
+	//getNumPizzaOrders() 
+	//getPizzaByIndex(int index)  
+	//getTotalProfit() 
+	// processLog(java.lang.String filename)
+	//resetDetails() 
 	
 	//Setup with a working log file
 	@Before
 	public void setUp() throws CustomerException, PizzaException, LogHandlerException{
 		PizzaRestaurant pizzaRestaurant = new PizzaRestaurant();
 		pizzaRestaurant.processLog(logFile);
-		
+		orderNumber = 8;
 		Pizza order = LogHandler.createPizza(orderString);
 	}
 	
@@ -62,20 +68,29 @@ public class RestaurantPizzaTests {
 	}
 	
 	//Wrong index provided
-	@Test
+	@Test (expected = PizzaException.class)
 	public void negativeIndex() throws PizzaException{
 		pizzaRestaurant.getPizzaByIndex(-1);
 	}
 	
-	//Index more than the number of orders provided
-	@Test
+	//Index more than the number of orders provided. Zero based index.
+	@Test (expected = PizzaException.class)
 	public void indexMoreThanNumberOfOrders() throws PizzaException{
-		pizzaRestaurant.getPizzaByIndex(ORDERNUMBERS + 1);
+		pizzaRestaurant.getPizzaByIndex(ORDERNUMBERS);
 	}
 	
 	@Test
 	public void testProfit(){
-		
+		int profit = 0;
+		for(int i=0; i < ORDERNUMBERS; i++){
+			profit += pizzaRestaurant.getPizzaByIndex(i).getOrderProfit();
+		}
+		assertEquals(profit, pizzaRestaurant.getTotalProfit(),0);
+	}
+	
+	@Test (expected = LogHandlerException.class)
+	public void fileNotFound() throws LogHandlerException, PizzaException, CustomerException{
+		pizzaRestaurant.processLog("NonExistentFileName");
 	}
 }
 
