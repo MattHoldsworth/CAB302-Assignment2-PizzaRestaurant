@@ -2,6 +2,8 @@ package asgn2Pizzas;
 
 import java.time.LocalTime;
 
+import asgn2Exceptions.PizzaException;
+
 
 /**
  * An abstract class that represents pizzas sold at the Pizza Palace restaurant. 
@@ -13,6 +15,16 @@ import java.time.LocalTime;
  *
  */
 public abstract class Pizza  {
+	
+	private double cost;
+	private double price;
+	private String type;
+	private int quantity;
+	private LocalTime orderTime;
+	private LocalTime deliveryTime;
+	private PizzaTopping[] margherita = {PizzaTopping.CHEESE, PizzaTopping.TOMATO};
+	private PizzaTopping[] meatlovers = {PizzaTopping.CHEESE, PizzaTopping.BACON, PizzaTopping.PEPPERONI, PizzaTopping.SALAMI};
+	private PizzaTopping[] vegetarian = {PizzaTopping.CHEESE, PizzaTopping.TOMATO, PizzaTopping.EGGPLANT, PizzaTopping.CAPSICUM, PizzaTopping.MUSHROOM};
 	
 	/**
 	 *  This class represents a pizza produced at the Pizza Palace restaurant.  A detailed description of the class's fields
@@ -32,50 +44,71 @@ public abstract class Pizza  {
 	 * 
 	 */
 	public Pizza(int quantity, LocalTime orderTime, LocalTime deliveryTime, String type, double price) throws PizzaException{
-		// TO DO	
-	}
+		if ((quantity < 1) || (quantity > 10)) {
+			throw new PizzaException();
+		} else {
+			this.quantity = quantity;
+			this.orderTime = orderTime;
+			this.deliveryTime = deliveryTime;
+			this.type = type;
+			this.price = price;
+		}//end if-else
+	}//end constructor
 
 	/**
-	 * Calculates how much a pizza would could to make calculated from its toppings.
+	 * Calculates how much a pizza would cost to make calculated from its toppings.
 	 *  
      * <P> PRE: TRUE
 	 * <P> POST: The cost field is set to sum of the Pizzas's toppings
 	 */
 	public final void calculateCostPerPizza(){
-		// TO DO
-	}
+		switch (this.type){
+		case "margherita" : for (PizzaTopping topping : margherita) {
+			this.cost += topping.ordinal();
+		}//end for loop
+		break;
+		case "meatlovers" : for (PizzaTopping topping : meatlovers) {
+			this.cost += topping.ordinal();
+		}//end for loop
+		break;
+		case "vegetarian" : for (PizzaTopping topping : vegetarian) {
+			this.cost += topping.ordinal();			
+		}//end for loop
+		break;
+		}//end switch statement
+	}//end
 	
 	/**
 	 * Returns the amount that an individual pizza costs to make.
 	 * @return The amount that an individual pizza costs to make.
 	 */
 	public final double getCostPerPizza(){
-		// TO DO
-	}
+		return this.cost;
+	}//end
 
 	/**
 	 * Returns the amount that an individual pizza is sold to the customer.
 	 * @return The amount that an individual pizza is sold to the customer.
 	 */
 	public final double getPricePerPizza(){
-		// TO DO
-	}
+		return this.price;
+	}//end
 
 	/**
 	 * Returns the amount that the entire order costs to make, taking into account the type and quantity of pizzas. 
 	 * @return The amount that the entire order costs to make, taking into account the type and quantity of pizzas. 
 	 */
 	public final double getOrderCost(){
-		// TO DO
-	}
+		return this.quantity * this.cost;
+	}//end 
 	
 	/**
 	 * Returns the amount that the entire order is sold to the customer, taking into account the type and quantity of pizzas. 
 	 * @return The amount that the entire order is sold to the customer, taking into account the type and quantity of pizzas. 
 	 */
 	public final double getOrderPrice(){
-		// TO DO
-	}
+		return this.price * this.quantity;
+	}//end
 	
 	
 	/**
@@ -83,8 +116,8 @@ public abstract class Pizza  {
 	 * @return  Returns the profit made by the restaurant on the order which is the order price minus the order cost.
 	 */
 	public final double getOrderProfit(){
-		// TO DO
-	}
+		return getOrderPrice() - getOrderCost();
+	}//end
 	
 
 	/**
@@ -93,16 +126,37 @@ public abstract class Pizza  {
 	 * @return Returns  true if the instance of Pizza contains the specified topping and false otherwise.
 	 */
 	public final boolean containsTopping(PizzaTopping topping){
-		// TO DO
-	}
+		boolean onPizza = true;
+		switch (this.type) {
+		case "margherita" : for (PizzaTopping condiment : margherita) {
+			if (topping == condiment) {
+				return onPizza;
+			}//end if statement
+		}//end for loop
+		break;
+		case "meatlovers" : for (PizzaTopping condiment : meatlovers) {
+			if (topping == condiment) {
+				return onPizza;
+			}//end if statement
+		}//end for loop
+		break;
+		case "vegetarian" : for (PizzaTopping condiment : vegetarian) {
+			if (topping == condiment) {
+				return onPizza;
+			}//end if statement
+		}//end for loop
+		break;
+		}//end switch statement
+		return !onPizza;
+	}//end containsTopping(PizzaTopping)
 	
 	/**
 	 * Returns the quantity of pizzas ordered. 
 	 * @return the quantity of pizzas ordered. 
 	 */
 	public final int getQuantity(){
-		// TO DO
-	}
+		return this.quantity;
+	}//end 
 
 	/**
 	 * Returns a human understandable description of the Pizza's type. 
@@ -110,8 +164,8 @@ public abstract class Pizza  {
 	 * @return A human understandable description of the Pizza's type.
 	 */
 	public final String getPizzaType(){
-		// TO DO
-	}
+		return this.type;
+	}//end
 
 
 	/**
@@ -134,7 +188,7 @@ public abstract class Pizza  {
 			(this.getPizzaType() == (otherPizza.getPizzaType()) &&
 			(this.getPricePerPizza()) == (otherPizza.getPricePerPizza()) &&
 			(this.getQuantity()) == (otherPizza.getQuantity()));
-	}
+	}//end
 
 	
-}
+}//end Pizza class
