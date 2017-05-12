@@ -30,9 +30,6 @@ public class DriverDeliveryCustomer extends Customer {
 	final static String TYPE = "Driver Delivery";
 	public DriverDeliveryCustomer(String name, String mobileNumber, int locationX, int locationY) throws CustomerException {
 		super(name, mobileNumber, locationX, locationY, TYPE);
-		if (locationX == 0 && locationY ==0){
-			throw new CustomerException("Invalid driver delivery customer location");
-		}
 	}
 	
 	/**

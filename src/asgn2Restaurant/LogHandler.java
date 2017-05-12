@@ -79,13 +79,13 @@ public class LogHandler {
 		}
 		String[] parameters = line.split(COMMA);
 		if (parameters.length != LOG_STRING_NUM_PARAMETERS){
-			throw new LogHandlerException("The line does not contain the right number of parameters");
+			throw new LogHandlerException("One of the line does not contain the right number of parameters");
 		}
 		
 		try {
-			String code = parameters[4];
 			String name = parameters[2];
-			String mobile = parameters[3];		
+			String mobile = parameters[3];
+			String code = parameters[4];
 			int locX = Integer.parseInt(parameters[5]);
 			int locY = Integer.parseInt(parameters[6]);
 			
@@ -94,6 +94,7 @@ public class LogHandler {
 		} catch (CustomerException e){
 			throw new CustomerException(e.getMessage());
 		} catch (Exception e){
+			//Parsing related exceptions (e.g. locationX or locationY containing non-numeric characters)
 			throw new LogHandlerException(e.getMessage());
 		}
 	}

@@ -48,23 +48,31 @@ public class PizzaFactoryTests {
 	}
 	
 	//Test if exception is thrown when invalid code strings are passed as input.
+	//Test if error is thrown if an empty string is passed
 	@Test (expected = PizzaException.class)
 	public void emptyCodeString() throws PizzaException{
 		PizzaFactory.getPizza("", quantity, orderTime, deliveryTime);
 	}
 	
-	//Pizza code should be 3 characters
+	//Test if error is thrown if one character string is passed.
+	@Test (expected = PizzaException.class)
+	public void singleCharacterString() throws PizzaException{
+		PizzaFactory.getPizza("P", quantity, orderTime, deliveryTime);
+	}
+	
+	//Test if error is thrown if four character string is passed.
 	@Test (expected = PizzaException.class)
 	public void fourCharacters() throws PizzaException{
 		PizzaFactory.getPizza("PZVM", quantity, orderTime, deliveryTime);
 	}
 	
+	//Test if error is thrown if a non-existent code is passed.
 	@Test (expected = PizzaException.class)
 	public void invalidCodeString() throws PizzaException{
 		PizzaFactory.getPizza("PZW", quantity, orderTime, deliveryTime);
 	}
 	
-	//Pizza code should be uppercase
+	//Test if error is thrown if lower case string is passed
 	@Test (expected = PizzaException.class)
 	public void lowerCaseCodeString() throws PizzaException{
 		PizzaFactory.getPizza("pzm", quantity, orderTime, deliveryTime);
@@ -72,10 +80,16 @@ public class PizzaFactoryTests {
 	
 	@Test (expected = PizzaException.class)
 	public void numericString() throws PizzaException{
-		PizzaFactory.getPizza("1", quantity, orderTime, deliveryTime);
+		PizzaFactory.getPizza("123", quantity, orderTime, deliveryTime);
 	}
 	
-	//Test if correct subclass pizza objects are instantiated
+	//Test if error is thrown if there is an empty space character in the middle
+	@Test (expected = PizzaException.class)
+	public void spaceBetween() throws PizzaException{
+		PizzaFactory.getPizza("P M", quantity, orderTime, deliveryTime);
+	}
+	
+	//Test if correct objects are instantiated
 	@Test
 	public void instantiateMargherita() throws PizzaException{
 		Pizza margherita2 = PizzaFactory.getPizza(MARGHERITA, quantity, orderTime, deliveryTime);
@@ -135,7 +149,7 @@ public class PizzaFactoryTests {
 	public void deliveryAfterAnHour() throws PizzaException{
 		orderTimeString = "20:10:00";
 		orderTime = LocalTime.parse(orderTimeString);
-		deliveryTime = orderTime.plusMinutes(75);
+		deliveryTime = orderTime.plusMinutes(65);
 		Pizza meatLovers2 = PizzaFactory.getPizza(MEATLOVERS, quantity, orderTime, deliveryTime);
 	}
 }

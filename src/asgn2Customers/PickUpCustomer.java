@@ -29,9 +29,6 @@ public class PickUpCustomer extends Customer {
 	final static String TYPE = "Pick Up";
 	public PickUpCustomer(String name, String mobileNumber, int locationX,  int locationY) throws CustomerException {
 		super(name, mobileNumber, locationX, locationY, TYPE);
-		if (locationX != 0 || locationY != 0){
-			throw new CustomerException("Invalid pick up customer location");
-		}
 	}
 
 	/**

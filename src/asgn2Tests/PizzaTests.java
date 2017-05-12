@@ -24,6 +24,8 @@ import asgn2Pizzas.PizzaTopping;
 public class PizzaTests {
 	static final int COOKING_TIME = 10;
 	static final int MAXIMUM_DELIVERY_TIME = 60;
+	static final int MAXIMUM_QUANTITY = 10;
+	static final int MINIMUM_QUANTITY = 1;
 	static final double MARGHERITA_COST = PizzaTopping.TOMATO.getCost() + PizzaTopping.CHEESE.getCost();
 	static final double VEGETARIAN_COST = PizzaTopping.TOMATO.getCost() + PizzaTopping.CHEESE.getCost()
 										+ PizzaTopping.EGGPLANT.getCost() + PizzaTopping.MUSHROOM.getCost()
@@ -35,7 +37,7 @@ public class PizzaTests {
 	static final double MARGHERITA_PRICE = 8;
 	static final double VEGETARIAN_PRICE = 10;
 	static final double MEATLOVERS_PRICE = 12;
-	
+
 	MargheritaPizza margherita;
 	MeatLoversPizza meatLovers;
 	VegetarianPizza vegetarian;	
@@ -77,63 +79,57 @@ public class PizzaTests {
 	//Tests for ordering more than 10
 	@Test (expected = PizzaException.class)
 	public void margheritaQuantityMoreThanTen() throws PizzaException{
-		quantity = 11;
+		quantity = MAXIMUM_QUANTITY + 1;
 		margherita = new MargheritaPizza(quantity, orderTime, deliveryTime);
 	}
 	
 	@Test (expected = PizzaException.class)
 	public void meatLoversQuantityMoreThanTen() throws PizzaException{
-		quantity = 11;
+		quantity = MAXIMUM_QUANTITY + 1;
 		meatLovers = new MeatLoversPizza(quantity, orderTime, deliveryTime);
 	}
 	
 	@Test (expected = PizzaException.class)
 	public void vegetarianQuantityMoreThanTen() throws PizzaException{
-		quantity = 11;
+		quantity = MAXIMUM_QUANTITY + 1;
 		vegetarian = new VegetarianPizza(quantity, orderTime, deliveryTime);
 	}
 	
 	//Border value tests for quantity
 	@Test
 	public void margheritaMinimumQuantity() throws PizzaException{
-		quantity = 0;
-		margherita = new MargheritaPizza(quantity, orderTime, deliveryTime);
-		assertEquals(quantity, margherita.getQuantity());
+		margherita = new MargheritaPizza(MINIMUM_QUANTITY, orderTime, deliveryTime);
+		assertEquals(MINIMUM_QUANTITY, margherita.getQuantity());
 	}
 	
 	@Test
 	public void meatLoversMinimumQuantity() throws PizzaException{
-		quantity = 0;
-		meatLovers = new MeatLoversPizza(quantity, orderTime, deliveryTime);
-		assertEquals(quantity, margherita.getQuantity());
+		meatLovers = new MeatLoversPizza(MINIMUM_QUANTITY, orderTime, deliveryTime);
+		assertEquals(MINIMUM_QUANTITY, margherita.getQuantity());
 	}
 	
 	@Test
 	public void vegetarianMinimumQuantity() throws PizzaException{
-		quantity = 0;
-		vegetarian = new VegetarianPizza(quantity, orderTime, deliveryTime);
-		assertEquals(quantity, margherita.getQuantity());
+		vegetarian = new VegetarianPizza(MINIMUM_QUANTITY, orderTime, deliveryTime);
+		assertEquals(MINIMUM_QUANTITY, margherita.getQuantity());
 	}
 	
 	@Test
 	public void margheritaMaximumQuantity() throws PizzaException{
-		quantity = 10;
-		margherita = new MargheritaPizza(quantity, orderTime, deliveryTime);
-		assertEquals(quantity, margherita.getQuantity());
+		margherita = new MargheritaPizza(MAXIMUM_QUANTITY, orderTime, deliveryTime);
+		assertEquals(MAXIMUM_QUANTITY, margherita.getQuantity());
 	}
 	
 	@Test
 	public void meatLoversMaximumQuantity() throws PizzaException{
-		quantity = 10;
-		meatLovers = new MeatLoversPizza(quantity, orderTime, deliveryTime);
-		assertEquals(quantity, margherita.getQuantity());
+		meatLovers = new MeatLoversPizza(MAXIMUM_QUANTITY, orderTime, deliveryTime);
+		assertEquals(MAXIMUM_QUANTITY, margherita.getQuantity());
 	}
 	
 	@Test
 	public void vegetarianMaximumQuantity() throws PizzaException{
-		quantity = 10;
-		vegetarian = new VegetarianPizza(quantity, orderTime, deliveryTime);
-		assertEquals(quantity, margherita.getQuantity());
+		vegetarian = new VegetarianPizza(MAXIMUM_QUANTITY, orderTime, deliveryTime);
+		assertEquals(MAXIMUM_QUANTITY, margherita.getQuantity());
 	}
 	
 	//Testing that ordering before 7:00pm is not allowed
@@ -161,7 +157,7 @@ public class PizzaTests {
 		vegetarian = new VegetarianPizza(quantity, orderTime, deliveryTime);
 	}
 	
-	//Test that ordering after 11:00pm is not allowed
+	//Test that ordering after 11:00pm is not allowed and test tht delivery after 11:00pm is allowed
 	@Test (expected = PizzaException.class)
 	public void margheritaOrderAfter11() throws PizzaException{
 		orderTimeString = "23:00:00";
@@ -185,7 +181,6 @@ public class PizzaTests {
 		deliveryTime = orderTime.plusMinutes(20);
 		vegetarian = new VegetarianPizza(quantity, orderTime, deliveryTime);
 	}
-	//Test if delivery after 11:00pm is allowed - not implemented Already tested 
 	
 	//Border value tests for order time
 	@Test
@@ -274,43 +269,60 @@ public class PizzaTests {
 		vegetarian = new VegetarianPizza(quantity, orderTime, deliveryTime);
 	}
 	
-	//Delivery time precedes order time - Not implemented
+	//Delivery time precedes order time
+	@Test (expected = PizzaException.class)
+	public void margheritaDeliveryBeforeOrder() throws PizzaException{
+		deliveryTime = orderTime.minusMinutes(20);
+		margherita = new MargheritaPizza(quantity, orderTime, deliveryTime);
+	}
 	
-	//If the delivery is made after 1 hour from when the pizza is ready (10 minutes after ordertime + 1 hr)
+	@Test (expected = PizzaException.class)
+	public void meatLoversDeliveryBeforeOrder() throws PizzaException{
+		deliveryTime = orderTime.minusMinutes(20);
+		meatLovers = new MeatLoversPizza(quantity, orderTime, deliveryTime);
+	}
+	
+	@Test (expected = PizzaException.class)
+	public void vegetarianDeliveryBeforeOrder() throws PizzaException{
+		deliveryTime = orderTime.minusMinutes(20);
+		vegetarian = new VegetarianPizza(quantity, orderTime, deliveryTime);
+	}
+	
+	//If the delivery is made after 1 hour
 	@Test (expected = PizzaException.class)
 	public void margheritaPizzaThrownOut() throws PizzaException{
-		deliveryTime = orderTime.plusMinutes(COOKING_TIME + MAXIMUM_DELIVERY_TIME);
+		deliveryTime = orderTime.plusMinutes(MAXIMUM_DELIVERY_TIME);
 		margherita = new MargheritaPizza(quantity, orderTime, deliveryTime);
 	}
 	
 	@Test (expected = PizzaException.class)
 	public void meatLoversPizzaThrownOut() throws PizzaException{
-		deliveryTime = orderTime.plusMinutes(COOKING_TIME + MAXIMUM_DELIVERY_TIME);
+		deliveryTime = orderTime.plusMinutes(MAXIMUM_DELIVERY_TIME);
 		meatLovers = new MeatLoversPizza(quantity, orderTime, deliveryTime);
 	}
 	
 	@Test (expected = PizzaException.class)
 	public void vegetarianPizzaThrownOut() throws PizzaException{
-		deliveryTime = orderTime.plusMinutes(COOKING_TIME + MAXIMUM_DELIVERY_TIME);
+		deliveryTime = orderTime.plusMinutes(MAXIMUM_DELIVERY_TIME);
 		vegetarian = new VegetarianPizza(quantity, orderTime, deliveryTime);
 	}
 	
 	//If the delivery is within 1 hour from when the pizza is ready
 	@Test
 	public void margheritaMaxDeliveryTime() throws PizzaException{
-		deliveryTime = orderTime.plusMinutes(COOKING_TIME + MAXIMUM_DELIVERY_TIME - 1);
+		deliveryTime = orderTime.plusMinutes(MAXIMUM_DELIVERY_TIME - 1);
 		margherita = new MargheritaPizza(quantity, orderTime, deliveryTime);
 	}
 	
 	@Test
 	public void meatLoversMaxDeliveryTime() throws PizzaException{
-		deliveryTime = orderTime.plusMinutes(COOKING_TIME + MAXIMUM_DELIVERY_TIME - 1);
+		deliveryTime = orderTime.plusMinutes(MAXIMUM_DELIVERY_TIME - 1);
 		meatLovers = new MeatLoversPizza(quantity, orderTime, deliveryTime);
 	}
 	
 	@Test
 	public void vegetarianMaxDeliveryTime() throws PizzaException{
-		deliveryTime = orderTime.plusMinutes(COOKING_TIME + MAXIMUM_DELIVERY_TIME - 1);
+		deliveryTime = orderTime.plusMinutes(MAXIMUM_DELIVERY_TIME - 1);
 		vegetarian = new VegetarianPizza(quantity, orderTime, deliveryTime);
 	}
 	
@@ -329,6 +341,28 @@ public class PizzaTests {
 	
 	@Test
 	public void vegetarianCost(){
+		vegetarian.calculateCostPerPizza();
+		assertEquals(VEGETARIAN_COST, vegetarian.getCostPerPizza(), 0);
+	}
+	
+	//Make sure that cost calculation involves a simple assignment therefore using multiple calculatecost method returns the same value.
+	@Test
+	public void margheritaCostCalculation(){
+		margherita.calculateCostPerPizza();
+		margherita.calculateCostPerPizza();
+		assertEquals(MARGHERITA_COST,margherita.getCostPerPizza(), 0);
+	}
+	
+	@Test
+	public void meatLoversCostCalculation(){
+		meatLovers.calculateCostPerPizza();
+		meatLovers.calculateCostPerPizza();
+		assertEquals(MEATLOVERS_COST, meatLovers.getCostPerPizza(), 0);
+	}
+	
+	@Test
+	public void vegetarianCostCalculation(){
+		vegetarian.calculateCostPerPizza();
 		vegetarian.calculateCostPerPizza();
 		assertEquals(VEGETARIAN_COST, vegetarian.getCostPerPizza(), 0);
 	}
@@ -498,6 +532,9 @@ public class PizzaTests {
 		assertEquals(quantity, margherita.getQuantity());
 		assertEquals(quantity, vegetarian.getQuantity());
 		assertEquals(quantity, meatLovers.getQuantity());	
+		assertEquals(extraQuantity, margherita2.getQuantity());
+		assertEquals(extraQuantity, vegetarian2.getQuantity());
+		assertEquals(extraQuantity, meatLovers2.getQuantity());	
 	}
 }
 

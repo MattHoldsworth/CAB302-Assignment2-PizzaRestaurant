@@ -56,8 +56,22 @@ public abstract class Customer {
 		} else if (!TYPES.contains(type)){
 			throw new CustomerException("Invalid customer type");
 			//if the length of the mobile number is not 10, or if the mobile number does not start with '0' or if the string contains non-numeric characters
-		} else if (mobileNumber.length()!= MOBILE_NUM_LENGTH || mobileNumber.toCharArray()[0] != '0' || !type.matches(mobileRegex)){
+		} else if (mobileNumber.length()!= MOBILE_NUM_LENGTH || mobileNumber.toCharArray()[0] != '0' || !mobileNumber.matches(mobileRegex)){
 			throw new CustomerException("Invalid mobile number");
+		} else if (type == "Pick Up"){
+			if (locationX != 0 || locationY != 0){
+				throw new CustomerException("Invalid pick up customer location");
+			}
+		} else if (type == "Driver Delivery"){
+			if (locationX == 0 && locationY ==0){
+				throw new CustomerException("Invalid driver delivery customer location");
+			}
+		} else if (type == "Drone Delivery"){
+			if (locationX == 0 && locationY == 0){
+				throw new CustomerException("Invalid drone delivery customer location");
+			}
+		} else if (locationX > 10 || locationX < -10 || locationY > 10 || locationY < -10){
+			throw new CustomerException("Customer located more than 10 blocks north/south/west/east of restaurant");
 		}
 		this.name = name;
 		this.mobileNumber = mobileNumber;

@@ -31,9 +31,6 @@ public class DroneDeliveryCustomer extends Customer {
 	final static String TYPE = "Drone Delivery";
 	public DroneDeliveryCustomer(String name, String mobileNumber, int locationX, int locationY) throws CustomerException {
 		super(name, mobileNumber, locationX, locationY, TYPE);
-		if (locationX == 0 && locationY == 0){
-			throw new CustomerException("Invalid drone delivery customer location");
-		}
 	}
 
 	/**
