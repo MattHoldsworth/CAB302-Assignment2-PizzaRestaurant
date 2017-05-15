@@ -1,7 +1,16 @@
 package asgn2Pizzas;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
+import asgn2Customers.Customer;
+import asgn2Customers.DriverDeliveryCustomer;
+import asgn2Customers.DroneDeliveryCustomer;
+import asgn2Customers.PickUpCustomer;
+import asgn2Exceptions.CustomerException;
 import asgn2Exceptions.PizzaException;
 
 /**
@@ -14,8 +23,9 @@ import asgn2Exceptions.PizzaException;
  */
 
 public class PizzaFactory {
-
-
+	
+	final static Set<String> pizzaCodes = new HashSet<String>(Arrays.asList(new String[]{"PZL", "PZM", "PZV"}));
+	
 	/**
 	 * A method that uses the Factory Method pattern to produce an instance of one of the asgn2Pizzas.Pizza subclasses. 
 	 * Subclasses are created using the pizzaCode. All valid pizza codes are listed in Section 5.3 of the Assignment Specification.
@@ -28,8 +38,25 @@ public class PizzaFactory {
 	 * @throws PizzaException if the pizzaCode is not one of the three valid codes listed in Section 5.3 of the Assignment Specification. 
 	 * @return A valid Pizza object using the specified parameters 
 	 * */
-	public static Pizza getPizza(String pizzaCode, int quantity, LocalTime orderTime, LocalTime deliveryTime) throws PizzaException{
-		// TO DO
-	}
-
-}
+	
+	public static Pizza getPizza(String pizzaCode, int quantity, LocalTime orderTime, LocalTime deliveryTime) throws PizzaException {
+			if (!pizzaCodes.contains(pizzaCode)) {
+				throw new PizzaException("Invalid customer code");
+			}//end if
+			try {
+				if (pizzaCode.equals("PZL")){
+					MeatLoversPizza meatlovers = new MeatLoversPizza(quantity, orderTime, deliveryTime);
+					return meatlovers;
+				} else if (pizzaCode.equals("PZM")) {
+					MargheritaPizza margherita = new MargheritaPizza(quantity, orderTime, deliveryTime);
+					return margherita;
+				} else {
+					VegetarianPizza vegetarian = new VegetarianPizza(quantity, orderTime, deliveryTime);
+					return vegetarian;
+				}//end if-else
+			} catch (Exception e) {
+				throw new PizzaException(e.getMessage());
+			}//end try-catch
+	}//end Pizza
+	
+}//end PizzaFactory
