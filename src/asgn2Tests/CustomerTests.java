@@ -324,6 +324,8 @@ public class CustomerTests {
 	
 	@Test
 	public void droneDeliveryCustomerOutOfRange() throws CustomerException {
+		locationX = 11;
+		locationY = 11;
 		double xDiff = Math.pow((locationX - RESTAURANT_X), 2);
 		double yDiff = Math.pow((locationY - RESTAURANT_Y), 2);
 		double distance = Math.sqrt(xDiff + yDiff);
