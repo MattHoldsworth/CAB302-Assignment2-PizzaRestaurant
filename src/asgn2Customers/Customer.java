@@ -3,6 +3,8 @@ package asgn2Customers;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import asgn2Exceptions.CustomerException;
 
@@ -12,7 +14,7 @@ import asgn2Exceptions.CustomerException;
  *  the abstract method getDeliveryDistance. A description of the class's
  * fields and their constraints is provided in Section 5.2 of the Assignment Specification.  
  * 
- * @author Person B
+ * @author Gyeongmin Jee
 */
 public abstract class Customer {
 
@@ -47,24 +49,31 @@ public abstract class Customer {
 	final static Set<String> TYPES= new HashSet<String>(Arrays.asList(new String[]{"Pick Up", "Driver Delivery", "Drone Delivery"}));
 	
 	public Customer(String name, String mobileNumber, int locationX, int locationY, String type) throws CustomerException{
-		String nameRegex = "[a-zA-Z]+";
+		String nameRegex = "[a-zA-Z' ]*[a-zA-Z]+[a-zA-Z ]*";
+    	Pattern namePattern = Pattern.compile(nameRegex);
+    	Matcher nameMatcher = namePattern.matcher(name);
 		String mobileRegex = "[0-9]+";
+		Pattern mobilePattern = Pattern.compile(mobileRegex);
+    	Matcher mobileMatcher = mobilePattern.matcher(mobileNumber);
 			//if length of the name is 0, or more than 20, or only contains space(or has non-alphabet characters), 
-		if ((name.length()<MIN_NAME_LENGTH) || (name.length()>MAX_NAME_LENGTH) || !name.matches(nameRegex)){
-			throw new CustomerException("Invalid customer name");
-			//
+		if ((name.length()<MIN_NAME_LENGTH) || (name.length()>MAX_NAME_LENGTH)){
+			throw new CustomerException("Invalid customer name length");
+			//if the name contains characters other than alphabet
+		} else if (!nameMatcher.matches()){
+			throw new CustomerException("Invalid customer name: Contains non alphabet characters");
+			//Throw exception if the the type passed is not valid
 		} else if (!TYPES.contains(type)){
 			throw new CustomerException("Invalid customer type");
 			//if the length of the mobile number is not 10, or if the mobile number does not start with '0' or if the string contains non-numeric characters
-		} else if (mobileNumber.length()!= MOBILE_NUM_LENGTH || mobileNumber.toCharArray()[0] != '0' || !mobileNumber.matches(mobileRegex)){
+		} else if (mobileNumber.length()!= MOBILE_NUM_LENGTH || mobileNumber.toCharArray()[0] != '0' || !mobileMatcher.matches()){
 			throw new CustomerException("Invalid mobile number");
 		} else if (type == "Pick Up"){
 			if (locationX != 0 || locationY != 0){
 				throw new CustomerException("Invalid pick up customer location");
 			}
 		} else if (type == "Driver Delivery"){
-			if (locationX == 0 && locationY ==0){
-				throw new CustomerException("Invalid driver delivery customer location");
+			if (locationX == 0 && locationY == 0){
+				throw new CustomerException("Customer name: " + name + " Invalid driver delivery customer location");
 			}
 		} else if (type == "Drone Delivery"){
 			if (locationX == 0 && locationY == 0){

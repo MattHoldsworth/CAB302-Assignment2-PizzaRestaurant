@@ -61,9 +61,9 @@ public class PizzaRestaurant {
 			return true;
 		} catch (CustomerException e){
 			throw new CustomerException(e.getMessage());
-		} catch (PizzaException e){
+		} /*catch (PizzaException e){
 			throw new PizzaException(e.getMessage());
-		} catch (Exception e){
+		} */catch (Exception e){
 			throw new LogHandlerException(e.getMessage());
 		}	
 	}

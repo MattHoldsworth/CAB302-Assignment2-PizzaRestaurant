@@ -44,6 +44,7 @@ public class LogHandler {
 				 customers.add(createCustomer(line));
 				 line = br.readLine();	 
 			 }
+			 br.close();
 			 return customers;
 		 } catch (CustomerException e){
 			 throw new CustomerException(e.getMessage());
@@ -74,8 +75,8 @@ public class LogHandler {
 	 * @throws LogHandlerException - If there was a problem parsing the line from the log file.
 	 */
 	public static Customer createCustomer(String line) throws CustomerException, LogHandlerException{
-		if (line == "" || !line.contains(Character.toString(','))){
-			throw new LogHandlerException();
+		if (line == "" || !line.contains(COMMA)){
+			throw new LogHandlerException("The line is empty or is not comma separated");
 		}
 		String[] parameters = line.split(COMMA);
 		if (parameters.length != LOG_STRING_NUM_PARAMETERS){
@@ -95,7 +96,7 @@ public class LogHandler {
 			throw new CustomerException(e.getMessage());
 		} catch (Exception e){
 			//Parsing related exceptions (e.g. locationX or locationY containing non-numeric characters)
-			throw new LogHandlerException(e.getMessage());
+			throw new LogHandlerException("Parsing error. Incorrect locationX or locationY");
 		}
 	}
 	

@@ -324,59 +324,59 @@ public class LogHandlerPizzaTests {
 	//Throw an error if the file does not exist.
 	@Test (expected = LogHandlerException.class)
 	public void fileNotFound() throws LogHandlerException, PizzaException{
-		LogHandler.populatePizzaDataset("NonExistentFileName");
+		LogHandler.populatePizzaDataset(".\\logs\\NonExistentFileName");
 	}
 	
 	//Throw an error if there's an empty string in the log file.
 	@Test (expected = LogHandlerException.class)
 	public void logFileWithEmptyString() throws LogHandlerException, PizzaException{
-		LogHandler.populatePizzaDataset("logWithEmptyString");
+		LogHandler.populatePizzaDataset(".\\logs\\logWithEmptyString");
 	}
 	
 	//Throw an error if there's a parameter missing in a string
 	@Test (expected = LogHandlerException.class)
 	public void logFileWithaMissingParameter() throws LogHandlerException, PizzaException{
-		LogHandler.populatePizzaDataset("logWithMissingParam");
+		LogHandler.populatePizzaDataset(".\\logs\\logWithMissingParam");
 	}
 	
 	//Throw an error if there's string without commas
 	@Test (expected = LogHandlerException.class)
 	public void logFileWithoutCommas() throws LogHandlerException, PizzaException{
-		LogHandler.populatePizzaDataset("logWithoutCommas");
+		LogHandler.populatePizzaDataset(".\\logs\\logWithoutCommas");
 	}
 	
 	//Throw an error if there's an empty order time
 	@Test (expected = LogHandlerException.class)
 	public void logFileWithEmptyOrderTime() throws LogHandlerException, PizzaException{
-		LogHandler.populatePizzaDataset("logWithEmptyOrderTime");
+		LogHandler.populatePizzaDataset(".\\logs\\logWithEmptyOrderTime");
 	}
 	
 	//Throw an error if there's an empty delivery time
 	@Test (expected = LogHandlerException.class)
 	public void logFileWithEmptyDeliveryTime() throws LogHandlerException, PizzaException{
-		LogHandler.populatePizzaDataset("logWithEmptyDeliveryTime");
+		LogHandler.populatePizzaDataset(".\\logs\\logWithEmptyDeliveryTime");
 	}
 	
 	//Throw an error if there's a non numeric quantity
 	@Test (expected = LogHandlerException.class)
 	public void logFileWithNonNumericQuantity() throws LogHandlerException, PizzaException{
-		LogHandler.populatePizzaDataset("logWithNonNumericQuantity");
+		LogHandler.populatePizzaDataset(".\\logs\\logWithNonNumericQuantity");
 	}
 	
 	//Throw an error if there's a semantic error
 	@Test (expected = PizzaException.class)
 	public void logFileWithOrderTimeBefore7() throws LogHandlerException, PizzaException{
-		LogHandler.populatePizzaDataset("logWithOrderTimeBefore7");
+		LogHandler.populatePizzaDataset(".\\logs\\logWithOrderTimeBefore7");
 	}
 
 	@Test (expected = PizzaException.class)
 	public void logFileWithOrderTimeAfter11() throws LogHandlerException, PizzaException{
-		LogHandler.populatePizzaDataset("logWithOrderTimeAfter11");
+		LogHandler.populatePizzaDataset(".\\logs\\logWithOrderTimeAfter11");
 	}
 	
 	@Test (expected = PizzaException.class)
 	public void logFileWithInvalidPizzaCode() throws LogHandlerException, PizzaException{
-		LogHandler.populatePizzaDataset("logFileWithInvalidPizzaCode");
+		LogHandler.populatePizzaDataset(".\\logs\\logFileWithInvalidPizzaCode");
 	}
 	
 	//Tests if populatePizzaDataset reads the order correctly

@@ -37,10 +37,10 @@ public class CustomerFactory {
 			throw new CustomerException("Invalid customer code");
 		}
 		try{
-			if (customerCode == "PUC"){
+			if (customerCode.equals("PUC")){
 				PickUpCustomer puc = new PickUpCustomer(name, mobileNumber, locationX, locationY);
 				return puc;
-			} else if (customerCode == "DNC") {
+			} else if (customerCode.equals("DNC")) {
 				DroneDeliveryCustomer dnc = new DroneDeliveryCustomer(name, mobileNumber, locationX, locationY);
 				return dnc;
 			} else {
