@@ -38,6 +38,9 @@ public class CustomerFactoryTests {
 	public void setUp() throws CustomerException {
 		name = "Bob";
 		mobileNumber = "0123456789";
+		/*
+		 The location is throwing error for the pick up customer
+		 */
 		locationX = 5;
 		locationY = 5;
 		

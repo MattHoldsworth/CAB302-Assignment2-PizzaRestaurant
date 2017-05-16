@@ -41,7 +41,13 @@ public class CustomerTests {
 	@Before @Test
 	public void setUp() throws CustomerException {
 		name = "Bob";
+		/*
+		 There's an error in the mobileNumber
+		 */
 		mobileNumber = "1234567890";
+		/*
+		 Probably use different location for pickup customer
+		 */
 		locationX = 5;
 		locationY = 5;
 		driverDeliveryCustomer = new DriverDeliveryCustomer(name, mobileNumber, locationX, locationY);
@@ -87,12 +93,17 @@ public class CustomerTests {
 		pickUpCustomer = new PickUpCustomer(name, mobileNumber, locationX, locationY);
 	}
 	
+	/*
+	 For: driverNameMaximum, droneNameMaximum, pickUpNamerMaximum
+	 Should update the name variable to match length of MAX_NAME_LENGTH. 
+	 The setup method initializes the name variable to three characters.
+	 */
 	@Test
 	public void driverNameMaximum() throws CustomerException {
 		driverDeliveryCustomer = new DriverDeliveryCustomer(name, mobileNumber, locationX, locationY);
 		assertEquals (MAX_NAME_LENGTH, driverDeliveryCustomer.getName().length());
 	}
-	
+
 	@Test
 	public void droneNameMaximum() throws CustomerException {
 		droneDeliveryCustomer = new DroneDeliveryCustomer(name, mobileNumber, locationX, locationY);
@@ -105,6 +116,10 @@ public class CustomerTests {
 		assertEquals (MAX_NAME_LENGTH, pickUpCustomer.getName().length());
 	}
 	
+	/*
+	 For: driverNameMinimum, droneNameMinimum, pickUpNameMinimum
+	 Should update the name variable to match the length of MIN_NAME_LENGTH
+	 */
 	@Test
 	public void driverNameMinimum() throws CustomerException {
 		driverDeliveryCustomer = new DriverDeliveryCustomer(name, mobileNumber, locationX, locationY);
@@ -198,6 +213,10 @@ public class CustomerTests {
 		assertEquals (MOBILE_NUM_LENGTH, pickUpCustomer.getMobileNumber().length());
 	}
 	
+	/*
+	 For driverLocationXMinimum, droneLocationXMinimum
+	 Should change the locationX variable here to match the value of MIN_LOCATION_X
+	 */
 	//Border value tests for locationX
 	@Test
 	public void driverLocationXMinimum() throws CustomerException {
@@ -211,12 +230,19 @@ public class CustomerTests {
 		assertEquals (MIN_LOCATION_X, droneDeliveryCustomer.getLocationX());
 	}
 	
+	/*
+	 Pick up customer's location should always be 0, 0
+	 */
 	@Test
 	public void pickUpLocationXMinimum() throws CustomerException {
 		pickUpCustomer = new PickUpCustomer(name, mobileNumber, locationX, locationY);
 		assertEquals (MIN_LOCATION_X, pickUpCustomer.getLocationX());
 	}
 	
+	/*
+	 For: driverLocationXMaximum, droneLocationXMaximum
+	 Should change locationX variable to match the value of MAX_LOCATION_X
+	 */
 	@Test
 	public void driverLocationXMaximum() throws CustomerException {
 		driverDeliveryCustomer = new DriverDeliveryCustomer(name, mobileNumber, locationX, locationY);
@@ -228,13 +254,18 @@ public class CustomerTests {
 		droneDeliveryCustomer = new DroneDeliveryCustomer(name, mobileNumber, locationX, locationY);
 		assertEquals (MAX_LOCATION_X, droneDeliveryCustomer.getLocationX());
 	}
-	
+	/*
+	 Pick up customer's location = 0, 0
+	 */
 	@Test
 	public void pickUpLocationXMaximum() throws CustomerException {
 		pickUpCustomer = new PickUpCustomer(name, mobileNumber, locationX, locationY);
 		assertEquals (MAX_LOCATION_X, pickUpCustomer.getLocationX());
 	}
 	
+	/*
+	 Same as above
+	 */
 	//Border value tests for locationY
 	@Test
 	public void driverLocationYMinimum() throws CustomerException {
@@ -272,6 +303,11 @@ public class CustomerTests {
 		assertEquals (MAX_LOCATION_Y, pickUpCustomer.getLocationY());
 	}
 	
+	/*
+	 getLocationY and getLocationX should return the customer's location from the restaurant 
+	 not the location of the restaurant. 
+	 You won't need to test for this.
+	 */
 	//Tests for restaurant location
 	@Test
 	public void driverDeliveryRestaurantLocation() throws CustomerException {
@@ -279,7 +315,9 @@ public class CustomerTests {
 		assertEquals (RESTAURANT_Y, driverDeliveryCustomer.getLocationY());
 		assertEquals (RESTAURANT_X, driverDeliveryCustomer.getLocationX());
 	}
-	
+	/*
+	 Same here
+	 */
 	@Test
 	public void droneDeliveryRestaurantLocation() throws CustomerException {
 		droneDeliveryCustomer = new DroneDeliveryCustomer(name, mobileNumber, locationX, locationY);
@@ -287,6 +325,9 @@ public class CustomerTests {
 		assertEquals (RESTAURANT_X, droneDeliveryCustomer.getLocationX());
 	}
 	
+	/*
+	 Same here
+	 */
 	//Test for not restaurant location for pick up customers
 	@Test
 	public void pickUpNotRestaurantLocation() throws CustomerException {
@@ -318,8 +359,17 @@ public class CustomerTests {
 	@Test
 	public void driverDeliveryCustomerOutOfRange() throws CustomerException {
 		double distance = Math.abs(locationX - RESTAURANT_X) + Math.abs(locationY - RESTAURANT_Y);
+		/*
+		 You do not need to instantiate the customer object again as it has already been defined in the @setup method
+		
 		driverDeliveryCustomer = new DriverDeliveryCustomer(name, mobileNumber, locationX, locationY);
+
+		 There's an assertEquals overloaded method for double values
+		 
 		assertEquals ((int)distance, (int)driverDeliveryCustomer.getDeliveryDistance());
+		Use this instead. The third argument of 0 indicates that you want the exact match.
+		*/
+		assertEquals(distance, driverDeliveryCustomer.getDeliveryDistance(), 0);
 	}
 	
 	@Test
@@ -329,11 +379,16 @@ public class CustomerTests {
 		double xDiff = Math.pow((locationX - RESTAURANT_X), 2);
 		double yDiff = Math.pow((locationY - RESTAURANT_Y), 2);
 		double distance = Math.sqrt(xDiff + yDiff);
+		/*
 		droneDeliveryCustomer = new DroneDeliveryCustomer(name, mobileNumber, locationX, locationY);
-		assertEquals ((int)distance, (int)droneDeliveryCustomer.getDeliveryDistance());
+		assertEquals ((int)distance, (int)droneDeliveryCustomer.getDeliveryDistance());	
+		*/
+		assertEquals (distance, droneDeliveryCustomer.getDeliveryDistance(), 0);	
 	}
 	
-	
+	/*
+	 Should test that pickup customer's getDeliveryDistance() returns 0. 
+	 */
 
 
 }
