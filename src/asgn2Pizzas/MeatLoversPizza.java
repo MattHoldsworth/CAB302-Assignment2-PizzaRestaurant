@@ -37,7 +37,6 @@ private static double price = 12;
  */
 	public MeatLoversPizza(int quantity, LocalTime orderTime, LocalTime deliveryTime) throws PizzaException {
 		super(quantity, orderTime, deliveryTime, type, price);
-		toppings.clear();
 		toppings.add(PizzaTopping.CHEESE);
 		toppings.add(PizzaTopping.BACON);
 		toppings.add(PizzaTopping.PEPPERONI);
