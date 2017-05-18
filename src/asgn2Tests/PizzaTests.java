@@ -105,13 +105,13 @@ public class PizzaTests {
 	@Test
 	public void meatLoversMinimumQuantity() throws PizzaException{
 		meatLovers = new MeatLoversPizza(MINIMUM_QUANTITY, orderTime, deliveryTime);
-		assertEquals(MINIMUM_QUANTITY, margherita.getQuantity());
+		assertEquals(MINIMUM_QUANTITY, meatLovers.getQuantity());
 	}
 	
 	@Test
 	public void vegetarianMinimumQuantity() throws PizzaException{
 		vegetarian = new VegetarianPizza(MINIMUM_QUANTITY, orderTime, deliveryTime);
-		assertEquals(MINIMUM_QUANTITY, margherita.getQuantity());
+		assertEquals(MINIMUM_QUANTITY, vegetarian.getQuantity());
 	}
 	
 	@Test
@@ -123,13 +123,13 @@ public class PizzaTests {
 	@Test
 	public void meatLoversMaximumQuantity() throws PizzaException{
 		meatLovers = new MeatLoversPizza(MAXIMUM_QUANTITY, orderTime, deliveryTime);
-		assertEquals(MAXIMUM_QUANTITY, margherita.getQuantity());
+		assertEquals(MAXIMUM_QUANTITY, meatLovers.getQuantity());
 	}
 	
 	@Test
 	public void vegetarianMaximumQuantity() throws PizzaException{
 		vegetarian = new VegetarianPizza(MAXIMUM_QUANTITY, orderTime, deliveryTime);
-		assertEquals(MAXIMUM_QUANTITY, margherita.getQuantity());
+		assertEquals(MAXIMUM_QUANTITY, vegetarian.getQuantity());
 	}
 	
 	//Testing that ordering before 7:00pm is not allowed
@@ -460,9 +460,9 @@ public class PizzaTests {
 	public void ToppingsInVegetarian(){
 		assertEquals(true, vegetarian.containsTopping(PizzaTopping.TOMATO));
 		assertEquals(true, vegetarian.containsTopping(PizzaTopping.CHEESE));
-		assertEquals(true, meatLovers.containsTopping(PizzaTopping.EGGPLANT));
-		assertEquals(true, meatLovers.containsTopping(PizzaTopping.MUSHROOM));
-		assertEquals(true, meatLovers.containsTopping(PizzaTopping.CAPSICUM));
+		assertEquals(true, vegetarian.containsTopping(PizzaTopping.EGGPLANT));
+		assertEquals(true, vegetarian.containsTopping(PizzaTopping.MUSHROOM));
+		assertEquals(true, vegetarian.containsTopping(PizzaTopping.CAPSICUM));
 	}
 	
 	//Make sure pizzas do not contain other toppings

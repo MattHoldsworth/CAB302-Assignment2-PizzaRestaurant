@@ -1,5 +1,7 @@
 package asgn2Pizzas;
 
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
@@ -17,12 +19,18 @@ import asgn2Exceptions.PizzaException;
  */
 public abstract class Pizza  {
 	
-	private double cost;
+	protected double cost;
 	private double price;
 	private String type;
-	private int quantity;
+	protected int quantity;
 	private LocalTime orderTime;
 	private LocalTime deliveryTime;
+	private String orderTimeString;
+	private String deliveryTimeString;
+	private String minOrderTime = "19:00:00";
+	private String maxOrderTime = "22:59:00";
+	private LocalTime minimum = LocalTime.parse(minOrderTime);
+	private LocalTime maximum = LocalTime.parse(maxOrderTime);
 	protected ArrayList<PizzaTopping> toppings = new ArrayList<PizzaTopping>();
 	
 	/**
@@ -42,16 +50,20 @@ public abstract class Pizza  {
 	 * @throws PizzaException if supplied parameters are invalid 
 	 * 
 	 */
-	public Pizza(int quantity, LocalTime orderTime, LocalTime deliveryTime, String type, double price) throws PizzaException{
-		if ((quantity < 1) || (quantity > 10)) {
+	public Pizza(int quantity, LocalTime orderTime, LocalTime deliveryTime, String type, double price) throws PizzaException {
+		orderTimeString = orderTime.toString();
+		deliveryTimeString = deliveryTime.toString();
+		if ((quantity < 1) || (quantity > 10) || (orderTimeString.isEmpty()) || (deliveryTimeString.isEmpty()) ||
+				(orderTime.isBefore(minimum)) ||(orderTime.isAfter(maximum)) ||(orderTime.isAfter(deliveryTime)) ||
+				(orderTime.plusMinutes(10).isAfter(deliveryTime)) || (deliveryTime.isAfter(orderTime.plusMinutes(59)))) {
 			throw new PizzaException();
 		} else {
 			this.quantity = quantity;
-			this.orderTime = orderTime;
-			this.deliveryTime = deliveryTime;
+			this.orderTime = LocalTime.parse(orderTimeString);
+			this.deliveryTime = LocalTime.parse(deliveryTimeString);
 			this.type = type;
 			this.price = price;
-		}//end if-else
+		}
 	}//end constructor
 
 	/**
@@ -61,9 +73,10 @@ public abstract class Pizza  {
 	 * <P> POST: The cost field is set to sum of the Pizzas's toppings
 	 */
 	
-	public final void calculateCostPerPizza(){
+	public final void calculateCostPerPizza() {
+		this.cost = 0;
 		for (PizzaTopping topping : toppings) {
-			cost += topping.getCost();
+			this.cost += topping.getCost();
 		}
 	}
 	
@@ -88,7 +101,8 @@ public abstract class Pizza  {
 	 * @return The amount that the entire order costs to make, taking into account the type and quantity of pizzas. 
 	 */
 	public final double getOrderCost(){
-		return this.quantity * this.cost;
+		calculateCostPerPizza();
+		return this.cost * this.quantity;
 	}//end 
 	
 	/**

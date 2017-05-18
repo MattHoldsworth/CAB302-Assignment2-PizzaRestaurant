@@ -16,7 +16,7 @@ import asgn2Exceptions.PizzaException;
  */
 public class MeatLoversPizza extends Pizza {
 	
-private static String type = "meatlovers";
+private static String type = "Meat Lovers";
 private static double price = 12;
 
 /**
@@ -37,6 +37,8 @@ private static double price = 12;
  */
 	public MeatLoversPizza(int quantity, LocalTime orderTime, LocalTime deliveryTime) throws PizzaException {
 		super(quantity, orderTime, deliveryTime, type, price);
+		toppings.clear();
+		toppings.add(PizzaTopping.TOMATO);
 		toppings.add(PizzaTopping.CHEESE);
 		toppings.add(PizzaTopping.BACON);
 		toppings.add(PizzaTopping.PEPPERONI);
