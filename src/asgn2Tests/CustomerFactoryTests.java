@@ -23,6 +23,8 @@ public class CustomerFactoryTests {
 	static final String DRIVER = "DVC";
 	static final String DRONE = "DNC";
 	static final String PICKUP = "PUC";
+	static final int RESTAURANT_X = 0;
+	static final int RESTAURANT_Y = 0;
 	
 	String name;
 	String mobileNumber;
@@ -41,13 +43,13 @@ public class CustomerFactoryTests {
 		/*
 		 The location is throwing error for the pick up customer
 		 */
-		locationX = 5;
-		locationY = 5;
+		locationX = 1;
+		locationY = 1;
 		
 		driverDeliveryCustomer = new DriverDeliveryCustomer(name, mobileNumber, locationX, locationY);
 		droneDeliveryCustomer = new DroneDeliveryCustomer(name, mobileNumber, locationX, locationY);
-		locationX = 0;
-		locationY = 0;
+		locationX = RESTAURANT_X;
+		locationY = RESTAURANT_Y;
 		pickUpCustomer = new PickUpCustomer(name, mobileNumber, locationX, locationY);
 	}
 	
@@ -90,27 +92,26 @@ public class CustomerFactoryTests {
 	//Test if correct objects are instantiated
 	@Test
 	public void instantiateDriverCustomer() throws CustomerException {
+		locationX = 1;
+		locationY = 1;
 		Customer driverDelivery2 = CustomerFactory.getCustomer(DRIVER, name, mobileNumber, locationX, locationY);
 		assertEquals(true, driverDeliveryCustomer.equals(driverDelivery2));
 	}
 	
 	@Test
 	public void instantiateDroneCustomer() throws CustomerException {
-		Customer droneDelivery2 = CustomerFactory.getCustomer(DRIVER, name, mobileNumber, locationX, locationY);
-		assertEquals(true, driverDeliveryCustomer.equals(droneDelivery2));
+		locationX = 1;
+		locationY = 1;
+		Customer droneDelivery2 = CustomerFactory.getCustomer(DRONE, name, mobileNumber, locationX, locationY);
+		assertEquals(true, droneDeliveryCustomer.equals(droneDelivery2));
 	}
 	
 	@Test
 	public void instantiatePickUpCustomer() throws CustomerException {
-		Customer pickUpCustomer2 = CustomerFactory.getCustomer(DRIVER, name, mobileNumber, locationX, locationY);
+		locationX = RESTAURANT_X;
+		locationY = RESTAURANT_Y;
+		Customer pickUpCustomer2 = CustomerFactory.getCustomer(PICKUP, name, mobileNumber, locationX, locationY);
 		assertEquals(true, pickUpCustomer.equals(pickUpCustomer2));
-	}
-	
-	//Make sure CustomerFactory propagates the CustomerException from customer objects
-	@Test (expected = CustomerException.class)
-	public void mobileLessThanTen() throws CustomerException {
-		mobileNumber = "123456789";
-		Customer driverDelivery2 = CustomerFactory.getCustomer(DRIVER, name, mobileNumber, locationX, locationY);
 	}
 	
 	
