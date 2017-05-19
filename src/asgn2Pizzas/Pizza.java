@@ -21,6 +21,7 @@ public abstract class Pizza  {
 	
 	protected double cost;
 	private double price;
+	private double profit;
 	private String type;
 	protected int quantity;
 	private LocalTime orderTime;
@@ -119,7 +120,8 @@ public abstract class Pizza  {
 	 * @return  Returns the profit made by the restaurant on the order which is the order price minus the order cost.
 	 */
 	public final double getOrderProfit(){
-		return getOrderPrice() - getOrderCost();
+		this.profit = getOrderPrice() - getOrderCost();
+		return profit;
 	}//end
 	
 

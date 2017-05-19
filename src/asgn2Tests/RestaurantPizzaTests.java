@@ -42,8 +42,8 @@ public class RestaurantPizzaTests {
 	//Setup with a working log file
 	@Before
 	public void setUp() throws CustomerException, PizzaException, LogHandlerException{
-		PizzaRestaurant pizzaRestaurant = new PizzaRestaurant();
-		Pizza order = LogHandler.createPizza(orderString);
+		pizzaRestaurant = new PizzaRestaurant();
+		order = LogHandler.createPizza(orderString);
 	}
 	
 	@Test
