@@ -4,6 +4,7 @@ package asgn2Restaurant;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 import asgn2Customers.Customer;
@@ -12,6 +13,7 @@ import asgn2Exceptions.CustomerException;
 import asgn2Exceptions.LogHandlerException;
 import asgn2Exceptions.PizzaException;
 import asgn2Pizzas.Pizza;
+import asgn2Pizzas.PizzaFactory;
 
 /**
  *
@@ -61,8 +63,22 @@ public class LogHandler {
 	 * @throws LogHandlerException If there was a problem with the log file not related to the semantic errors above
 	 * 
 	 */
-	public static ArrayList<Pizza> populatePizzaDataset(String filename) throws PizzaException, LogHandlerException{
-		// TO DO
+	public static ArrayList<Pizza> populatePizzaDataset(String filename) throws PizzaException, LogHandlerException {
+		try {
+			ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
+			BufferedReader reader = new BufferedReader(new FileReader(filename));
+			String input = reader.readLine();
+			while (input.isEmpty()) {
+				pizzas.add(createPizza(input));
+				input = reader.readLine();
+			}
+			reader.close();
+			return pizzas;
+		} catch (PizzaException e) {
+			throw new PizzaException(e.getMessage());
+		} catch (Exception e) {
+			throw new LogHandlerException(e.getMessage());
+		}
 	}		
 
 	
@@ -109,7 +125,26 @@ public class LogHandler {
 	 * @throws LogHandlerException - If there was a problem parsing the line from the log file.
 	 */
 	public static Pizza createPizza(String line) throws PizzaException, LogHandlerException{
-		// TO DO		
+		if (line == "" || !line.contains(COMMA)){
+			throw new LogHandlerException("The line is empty or is not comma separated");
+		}
+		String[] parameters = line.split(COMMA);
+		if (parameters.length != LOG_STRING_NUM_PARAMETERS){
+			throw new LogHandlerException("One of the line does not contain the right number of parameters");
+		}
+		try {
+			String pizzaCode = parameters[7];
+			int quantity = Integer.parseInt(parameters[8]);
+			LocalTime orderTime = LocalTime.parse(parameters[0]);
+			LocalTime deliveryTime = LocalTime.parse(parameters[1]);
+			
+			Pizza newPizza = PizzaFactory.getPizza(pizzaCode, quantity, orderTime, deliveryTime);
+			return newPizza;
+		} catch (PizzaException e) {
+			throw new PizzaException(e.getMessage());
+		} catch (Exception e) {
+			throw new LogHandlerException("Parsing error. Incorrect orderTime, deliveryTime or quantity");
+		}
 	}
 
 }
