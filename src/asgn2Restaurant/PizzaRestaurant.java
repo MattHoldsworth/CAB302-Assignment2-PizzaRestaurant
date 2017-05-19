@@ -57,13 +57,13 @@ public class PizzaRestaurant {
 	public boolean processLog(String filename) throws CustomerException, PizzaException, LogHandlerException{
 		try{
 			customers = LogHandler.populateCustomerDataset(filename);
-			//Add populatepizzadataset here
+			pizzas = LogHandler.populatePizzaDataset(filename);
 			return true;
 		} catch (CustomerException e){
 			throw new CustomerException(e.getMessage());
-		} /*catch (PizzaException e){
+		} catch (PizzaException e){
 			throw new PizzaException(e.getMessage());
-		} */catch (Exception e){
+		} catch (Exception e){
 			throw new LogHandlerException(e.getMessage());
 		}	
 	}
@@ -85,7 +85,7 @@ public class PizzaRestaurant {
 	 * @throws PizzaException if index is invalid.
 	 */	
 	public Pizza getPizzaByIndex(int index) throws PizzaException{
-		// TO DO
+		return pizzas.get(index);
 	}
 	
 	/**
@@ -95,7 +95,7 @@ public class PizzaRestaurant {
 	 * @return the number of objects contained in the pizzas field.
 	 */
 	public int getNumPizzaOrders(){
-		// TO DO
+		return pizzas.size();
 	}
 
 	/**
@@ -108,8 +108,6 @@ public class PizzaRestaurant {
 		return customers.size();
 	}
 
-			
-	
 	/**
 	 * Returns the total delivery distance for all of the customers.
 	 * 
@@ -120,7 +118,6 @@ public class PizzaRestaurant {
 		for(int i = 0; i < customers.size(); i++){
 			total += customers.get(i).getDeliveryDistance();
 		}
-		
 		return total;
 	}
 
@@ -130,7 +127,11 @@ public class PizzaRestaurant {
 	 * @return the total profit for all of the Pizza objects in the pizzas field.
 	 */	
 	public double getTotalProfit(){
-		// TO DO
+		double profit = 0;
+		for (Pizza pizza : pizzas) {
+			profit += pizza.getOrderProfit();
+		}
+		return profit;
 	}
 	
 	/**
@@ -141,6 +142,7 @@ public class PizzaRestaurant {
 	 */
 	public void resetDetails(){
 		customers.clear();
+		pizzas.clear();
 	}
 
 }

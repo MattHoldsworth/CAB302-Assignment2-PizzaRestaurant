@@ -65,15 +65,15 @@ public class LogHandler {
 	 */
 	public static ArrayList<Pizza> populatePizzaDataset(String filename) throws PizzaException, LogHandlerException {
 		try {
-			ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
+			ArrayList<Pizza> orders = new ArrayList<Pizza>();
 			BufferedReader reader = new BufferedReader(new FileReader(filename));
 			String input = reader.readLine();
 			while (input.isEmpty()) {
-				pizzas.add(createPizza(input));
+				orders.add(createPizza(input));
 				input = reader.readLine();
 			}
 			reader.close();
-			return pizzas;
+			return orders;
 		} catch (PizzaException e) {
 			throw new PizzaException(e.getMessage());
 		} catch (Exception e) {
@@ -125,12 +125,12 @@ public class LogHandler {
 	 * @throws LogHandlerException - If there was a problem parsing the line from the log file.
 	 */
 	public static Pizza createPizza(String line) throws PizzaException, LogHandlerException{
-		if (line == "" || !line.contains(COMMA)){
+		if (line.isEmpty() || !line.contains(COMMA)){
 			throw new LogHandlerException("The line is empty or is not comma separated");
 		}
 		String[] parameters = line.split(COMMA);
 		if (parameters.length != LOG_STRING_NUM_PARAMETERS){
-			throw new LogHandlerException("One of the line does not contain the right number of parameters");
+			throw new LogHandlerException("A line does not contain the right number of parameters");
 		}
 		try {
 			String pizzaCode = parameters[7];
