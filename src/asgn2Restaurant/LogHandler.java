@@ -32,6 +32,9 @@ public class LogHandler {
 	
 	final static int LOG_STRING_NUM_PARAMETERS = 9;
 	final static String COMMA = ",";
+	private static ArrayList<Customer> customers;
+	private static ArrayList<Pizza> pizzas;
+	
 	/**
 	 * Returns an ArrayList of Customer objects from the information contained in the log file ordered as they appear in the log file.
 	 * @param filename The file name of the log file
@@ -43,7 +46,7 @@ public class LogHandler {
 	 */
 	public static ArrayList<Customer> populateCustomerDataset(String filename) throws CustomerException, LogHandlerException{		 
 		 try{
-			 ArrayList<Customer> customers = new ArrayList<Customer>();
+			 customers = new ArrayList<Customer>();
 			 BufferedReader br = new BufferedReader(new FileReader(filename));
 			 String line = br.readLine(); 
 			 while (line != null){
@@ -69,7 +72,7 @@ public class LogHandler {
 	 */
 	public static ArrayList<Pizza> populatePizzaDataset(String filename) throws PizzaException, LogHandlerException {
 		try {
-			ArrayList<Pizza> pizzas = new ArrayList<Pizza>();
+			pizzas = new ArrayList<Pizza>();
 			BufferedReader reader = new BufferedReader(new FileReader(filename));
 			String input = reader.readLine();
 			while (input != null) {

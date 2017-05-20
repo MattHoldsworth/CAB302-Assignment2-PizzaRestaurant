@@ -146,7 +146,7 @@ public class LogHandlerCustomerTests {
 		LogHandler.createCustomer(sampleLog);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void nonNumericName() throws CustomerException, LogHandlerException {
 		name = "123";
 		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
@@ -154,7 +154,7 @@ public class LogHandlerCustomerTests {
 		LogHandler.createCustomer(sampleLog);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void tooManyLettersInName() throws CustomerException, LogHandlerException {
 		name = "Over Twentycharacters";
 		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
@@ -162,7 +162,7 @@ public class LogHandlerCustomerTests {
 		LogHandler.createCustomer(sampleLog);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void nonNumericCustomerCode() throws CustomerException, LogHandlerException {
 		customerCode = "123";
 		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
@@ -170,7 +170,7 @@ public class LogHandlerCustomerTests {
 		LogHandler.createCustomer(sampleLog);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void incorrectCustomerCode() throws CustomerException, LogHandlerException {
 		customerCode = "DVM";
 		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
@@ -178,7 +178,7 @@ public class LogHandlerCustomerTests {
 		LogHandler.createCustomer(sampleLog);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void tooManyLettersInCode() throws CustomerException, LogHandlerException {
 		customerCode = "DVCC";
 		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
@@ -186,7 +186,7 @@ public class LogHandlerCustomerTests {
 		LogHandler.createCustomer(sampleLog);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void notEnoughLettersInCode() throws CustomerException, LogHandlerException {
 		customerCode = "DV";
 		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
@@ -194,7 +194,7 @@ public class LogHandlerCustomerTests {
 		LogHandler.createCustomer(sampleLog);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void notMobileStartingWithZero() throws CustomerException, LogHandlerException {
 		mobileNumber = "1234567890";
 		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
@@ -202,7 +202,7 @@ public class LogHandlerCustomerTests {
 		LogHandler.createCustomer(sampleLog);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void notEnoughMobileNumbers() throws CustomerException, LogHandlerException {
 		mobileNumber = "012345678";
 		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
@@ -210,7 +210,7 @@ public class LogHandlerCustomerTests {
 		LogHandler.createCustomer(sampleLog);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void tooManyMobileNumbers() throws CustomerException, LogHandlerException {
 		mobileNumber = "01234567890";
 		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
@@ -218,7 +218,7 @@ public class LogHandlerCustomerTests {
 		LogHandler.createCustomer(sampleLog);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void nonNumericMobileNumber() throws CustomerException, LogHandlerException {
 		mobileNumber = "012345678o";
 		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+

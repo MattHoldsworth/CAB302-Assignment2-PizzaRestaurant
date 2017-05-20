@@ -85,7 +85,7 @@ public class PizzaRestaurant {
 	 * @throws PizzaException if index is invalid.
 	 */	
 	public Pizza getPizzaByIndex(int index) throws PizzaException{
-		if (index < 0 || index >= NUM_ORDERS){
+		if (index < 0 || index > NUM_ORDERS - 1){
 			throw new PizzaException();
 		}
 		return pizzas.get(index);

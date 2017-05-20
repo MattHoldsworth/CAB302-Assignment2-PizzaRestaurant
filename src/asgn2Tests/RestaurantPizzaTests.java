@@ -53,7 +53,7 @@ public class RestaurantPizzaTests {
 	}
 	
 	//When initialized, the array is empty thus throws an error.
-	@Test (expected = PizzaException.class)
+	@Test (expected = java.lang.IndexOutOfBoundsException.class)
 	public void initialArrayListState() throws PizzaException{
 		pizzaRestaurant.getPizzaByIndex(0);
 	}
@@ -98,14 +98,14 @@ public class RestaurantPizzaTests {
 	@Test (expected = PizzaException.class)
 	public void indexMoreThanNumberOfOrders() throws PizzaException, CustomerException, LogHandlerException{
 		pizzaRestaurant.processLog(logFile);
-		pizzaRestaurant.getPizzaByIndex(NUM_ORDERS);
+		pizzaRestaurant.getPizzaByIndex(NUM_ORDERS + 1);
 	}
 	
 	@Test
 	public void testProfit() throws CustomerException, PizzaException, LogHandlerException{
 		pizzaRestaurant.processLog(logFile);
-		int profit = 0;
-		for(int i=0; i <= NUM_ORDERS; i++){
+		double profit = 0;
+		for(int i=0; i < NUM_ORDERS; i++){
 			profit += pizzaRestaurant.getPizzaByIndex(i).getOrderProfit();
 		}
 		assertEquals(profit, pizzaRestaurant.getTotalProfit(),0);
@@ -119,7 +119,7 @@ public class RestaurantPizzaTests {
 		assertEquals(0, pizzaRestaurant.getTotalProfit(), 0);
 	}
 	
-	@Test (expected = PizzaException.class)
+	@Test (expected = java.lang.IndexOutOfBoundsException.class)
 	public void testResetArrayReset() throws CustomerException, PizzaException, LogHandlerException{
 		pizzaRestaurant.processLog(logFile);
 		pizzaRestaurant.resetDetails();
