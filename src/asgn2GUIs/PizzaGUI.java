@@ -173,7 +173,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 			customerModel = (DefaultTableModel)customerTable.getModel();
 			pizzaModel = (DefaultTableModel)pizzaTable.getModel();
 			int customerOrders, pizzaOrders;
-			if ((customerOrders = restaurant.getNumCustomerOrders()) != 0) {
+			if (((customerOrders = restaurant.getNumCustomerOrders()) != 0) || ((pizzaOrders = restaurant.getNumPizzaOrders()) != 0)) {
 				for (int i=0; i< customerOrders; i++){
 					Customer customer = restaurant.getCustomerByIndex(i);
 					data.add(customer.getName());

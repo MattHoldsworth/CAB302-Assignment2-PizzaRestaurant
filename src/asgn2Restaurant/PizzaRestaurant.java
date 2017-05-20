@@ -24,7 +24,7 @@ public class PizzaRestaurant {
 
 	private ArrayList<Customer> customers;
 	private ArrayList<Pizza> pizzas;
-
+	static final int NUM_ORDERS = 100;
 	
 	/**
 	 * Creates an instance of the PizzaRestaurant and sets the customers and pizzas fields to
@@ -85,6 +85,9 @@ public class PizzaRestaurant {
 	 * @throws PizzaException if index is invalid.
 	 */	
 	public Pizza getPizzaByIndex(int index) throws PizzaException{
+		if (index < 0 || index >= NUM_ORDERS){
+			throw new PizzaException();
+		}
 		return pizzas.get(index);
 	}
 	
