@@ -4,7 +4,11 @@ package asgn2Restaurant;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import asgn2Customers.Customer;
@@ -135,9 +139,9 @@ public class LogHandler {
 		try {
 			String pizzaCode = parameters[7];
 			int quantity = Integer.parseInt(parameters[8]);
-			LocalTime orderTime = LocalTime.parse(parameters[0]);
-			LocalTime deliveryTime = LocalTime.parse(parameters[1]);
-			
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+			LocalTime orderTime = LocalTime.parse(parameters[0], formatter);
+			LocalTime deliveryTime = LocalTime.parse(parameters[1], formatter);
 			Pizza newPizza = PizzaFactory.getPizza(pizzaCode, quantity, orderTime, deliveryTime);
 			return newPizza;
 		} catch (PizzaException e) {

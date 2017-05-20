@@ -532,9 +532,9 @@ public class PizzaTests {
 		assertEquals(quantity, margherita.getQuantity());
 		assertEquals(quantity, vegetarian.getQuantity());
 		assertEquals(quantity, meatLovers.getQuantity());	
-		assertEquals(extraQuantity, margherita2.getQuantity());
-		assertEquals(extraQuantity, vegetarian2.getQuantity());
-		assertEquals(extraQuantity, meatLovers2.getQuantity());	
+		assertEquals(quantity + extraQuantity, margherita2.getQuantity());
+		assertEquals(quantity + extraQuantity, vegetarian2.getQuantity());
+		assertEquals(quantity + extraQuantity, meatLovers2.getQuantity());	
 	}
 }
 

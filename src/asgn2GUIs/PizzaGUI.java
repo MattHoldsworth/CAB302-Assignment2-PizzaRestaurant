@@ -168,13 +168,12 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	}
 	
 	public void updateTables(){
-		//model.addRow(new Object[]{"a","b","C","d","e"});
 		try {
 			ArrayList<Object> data = new ArrayList<Object>();
 			customerModel = (DefaultTableModel)customerTable.getModel();
 			pizzaModel = (DefaultTableModel)pizzaTable.getModel();
 			int customerOrders, pizzaOrders;
-			if (((customerOrders = restaurant.getNumCustomerOrders()) != 0) /*|| ((pizzaOrders = restaurant.getNumPizzaOrders()) != 0)*/){
+			if ((customerOrders = restaurant.getNumCustomerOrders()) != 0) {
 				for (int i=0; i< customerOrders; i++){
 					Customer customer = restaurant.getCustomerByIndex(i);
 					data.add(customer.getName());
@@ -188,8 +187,8 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 					data.clear();
 				}
 				
-				/*
-					for(int i=0; pizzaOrders; i++){
+				if ((pizzaOrders = restaurant.getNumPizzaOrders()) != 0) {
+					for(int i=0; i < pizzaOrders; i++){
 						Pizza pizza = restaurant.getPizzaByIndex(i);
 						data.add(pizza.getPizzaType());
 						data.add(pizza.getQuantity());
@@ -198,10 +197,10 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 						data.add(pizza.getOrderProfit());
 						Object[] row = new Object[data.size()];
 						row = data.toArray(row);
-						model.addRow(row);
+						pizzaModel.addRow(row);
 						data.clear();
 					}
-				 */
+				}
 			} else {
 				JOptionPane.showMessageDialog(this, "You must load a log file first", "Error",
 					    JOptionPane.ERROR_MESSAGE);
@@ -212,9 +211,9 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 				    JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 			System.exit(0);
-		} /*catch (PizzaException e){
+		} catch (PizzaException e){
 			
-		}*/ catch (Exception e){
+		} catch (Exception e){
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Error displaying data",
 				    JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
@@ -224,11 +223,11 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	
 	public void updateTotal(){
 		//If log file has been loaded and processed get the total. Else, throw an error message
-		if (((restaurant.getNumCustomerOrders()) != 0) /*|| ((restaurant.getNumPizzaOrders()) != 0)*/){
+		if (((restaurant.getNumCustomerOrders()) != 0) || ((restaurant.getNumPizzaOrders()) != 0)){
 			//Update total delivery distance
 			totalDistance.setText(String.valueOf(restaurant.getTotalDeliveryDistance()));
 			//Update total profit
-			//totalProfit.setText(String.valueOf(restaurant.getTotalProfit()));
+			totalProfit.setText(String.valueOf(restaurant.getTotalProfit()));
 		} else {
 			JOptionPane.showMessageDialog(this,"You must load a log file first", "Error",
 				    JOptionPane.ERROR_MESSAGE);
@@ -236,16 +235,16 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	}
 	
 	public void reset(){
-		if (((restaurant.getNumCustomerOrders()) != 0) /*|| ((restaurant.getNumPizzaOrders()) != 0)*/){
+		if (((restaurant.getNumCustomerOrders()) != 0) || ((restaurant.getNumPizzaOrders()) != 0)){
 			restaurant.resetDetails();
-			if (customerModel.getRowCount() > 0 /*&& pizzaModel.getRowCount() > 0*/){
+			if (customerModel.getRowCount() > 0 && pizzaModel.getRowCount() > 0){
 				for (int i= customerModel.getRowCount()-1; i > -1 ; i--){
 					customerModel.removeRow(i);
 				}
-				/*
+				
 				for (int i=pizzaModel.getRowCount()-1; i > -1 ; i--){
 					pizzaModel.removeRow(i);
-				}*/
+				}
 			}
 			totalDistance.setText("");
 			totalProfit.setText("");

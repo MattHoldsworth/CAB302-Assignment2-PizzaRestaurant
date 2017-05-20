@@ -47,7 +47,7 @@ public class LogHandlerPizzaTests {
 		
 		LocalTime orderTime = LocalTime.parse(orderTimeString);
 		LocalTime deliveryTime = LocalTime.parse(deliveryTimeString);
-		Pizza vegetarian = new VegetarianPizza(2, orderTime, deliveryTime);
+		vegetarian = new VegetarianPizza(2, orderTime, deliveryTime);
 	}
 	
 	//Tests if correct pizza object is created.
