@@ -116,7 +116,7 @@ public class LogHandler {
 			throw new CustomerException(e.getMessage());
 		} catch (Exception e){
 			//Parsing related exceptions (e.g. locationX or locationY containing non-numeric characters)
-			throw new LogHandlerException("Parsing error. Incorrect locationX or locationY");
+			throw new LogHandlerException("Parsing error. Incorrect locationX or locationY or Non integer locationx/y");
 		}
 	}
 	

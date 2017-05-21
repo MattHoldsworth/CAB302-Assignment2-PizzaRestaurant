@@ -66,14 +66,25 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		super(title);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLayout(new BorderLayout());
-		
 		JPanel displayPanel = new JPanel();
 		displayPanel.setLayout(new BorderLayout());
 		
-		//Table
+		//Create a model for the jtable that disables
+		//users from editing the table contents
+		class myCustomerModel extends DefaultTableModel{
+			public myCustomerModel(String[] columns, int i){
+				super(columns, i);
+			}
+			public boolean isCellEditable(int row, int column){  
+	          return false;  
+			}
+		}
+		
+		//Create a table with the custom table model
 		String[] columns = {"Customer Name","Mobile","Type","X/Y location","Delivery Distance"};
-		DefaultTableModel customerModel = new DefaultTableModel(columns, 0);
-		customerTable = new JTable(customerModel);
+		customerTable = new JTable(new myCustomerModel(columns, 0));
+		
+		//Add the customer table the display panel
 		displayPanel.add(new JScrollPane(customerTable), BorderLayout.WEST);
 		String[] columns2 = {"Pizza Type","Quantity","Order Price","Order Cost","Order Profit"};
 		DefaultTableModel pizzaModel = new DefaultTableModel(columns2, 0);
@@ -212,7 +223,10 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 			e.printStackTrace();
 			System.exit(0);
 		} catch (PizzaException e){
-			
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error displaying Pizza data",
+				    JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+			System.exit(0);
 		} catch (Exception e){
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Error displaying data",
 				    JOptionPane.ERROR_MESSAGE);

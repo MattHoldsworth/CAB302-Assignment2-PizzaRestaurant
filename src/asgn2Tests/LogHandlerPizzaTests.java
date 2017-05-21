@@ -377,7 +377,7 @@ public class LogHandlerPizzaTests {
 	
 	@Test (expected = PizzaException.class)
 	public void logFileWithInvalidPizzaCode() throws LogHandlerException, PizzaException{
-		LogHandler.populatePizzaDataset(".\\logs\\logFileWithInvalidPizzaCode");
+		LogHandler.populatePizzaDataset(".\\logs\\logWithInvalidPizzaCode");
 	}
 	
 	//Tests if populatePizzaDataset reads the order correctly

@@ -27,7 +27,6 @@ public class LogHandlerCustomerTests {
 	String rightPizzaDetails;
 	int locationX;
 	int locationY;
-	String sampleLog;
 	
 	Customer customer;
 	Customer driverDelivery;
@@ -45,8 +44,7 @@ public class LogHandlerCustomerTests {
 				xcoord+','+ycoord+','+rightPizzaDetails;
 		locationX = Integer.parseInt(xcoord);
 		locationY = Integer.parseInt(ycoord);
-		driverDelivery = new DriverDeliveryCustomer(name, mobileNumber, locationX, locationY);
-		
+		driverDelivery = new DriverDeliveryCustomer(name, mobileNumber, locationX, locationY);	
 	}
 	
 	@Test
@@ -64,166 +62,167 @@ public class LogHandlerCustomerTests {
 	
 	@Test (expected = LogHandlerException.class)
 	public void noCommas() throws CustomerException, LogHandlerException {
-		sampleLog = "leftPizzaDetails + name + mobileNumber + locationX + locationY + rightPizzaDetails";
-		LogHandler.createCustomer(sampleLog);
+		log = leftPizzaDetails+name+mobileNumber+customerCode+
+				xcoord+ycoord+rightPizzaDetails;
+		LogHandler.createCustomer(log);
 	}
 	
 	@Test (expected = LogHandlerException.class)
 	public void missingName() throws CustomerException, LogHandlerException {
-		sampleLog = leftPizzaDetails+','+mobileNumber+','+customerCode+','+
-				locationX+','+locationY+','+rightPizzaDetails;
-		LogHandler.createCustomer(sampleLog);
+		log = leftPizzaDetails+','+mobileNumber+','+customerCode+','+
+				xcoord+','+ycoord+','+rightPizzaDetails;
+		LogHandler.createCustomer(log);
 	}
 	
 	@Test (expected = LogHandlerException.class)
 	public void missingMobileNumber() throws CustomerException, LogHandlerException {
-		sampleLog = leftPizzaDetails+','+name+','+customerCode+','+
-				locationX+','+locationY+','+rightPizzaDetails;
-		LogHandler.createCustomer(sampleLog);
+		log = leftPizzaDetails+','+name+','+customerCode+','+
+				xcoord+','+ycoord+','+rightPizzaDetails;
+		LogHandler.createCustomer(log);
 	}
 	
 	@Test (expected = LogHandlerException.class)
 	public void missingLocationX() throws CustomerException, LogHandlerException {
-		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
+		log = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
 				locationY+','+rightPizzaDetails;
-		LogHandler.createCustomer(sampleLog);
+		LogHandler.createCustomer(log);
 	}
 	
 	@Test (expected = LogHandlerException.class)
 	public void missingLocationY() throws CustomerException, LogHandlerException {
-		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
+		log = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
 				locationX+','+rightPizzaDetails;
-		LogHandler.createCustomer(sampleLog);
+		LogHandler.createCustomer(log);
 	}
 	
 	@Test (expected = LogHandlerException.class)
 	public void nonNumericLocationX() throws CustomerException, LogHandlerException {
 		xcoord = "a";
-		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
+		log = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
 				xcoord+','+ycoord+','+rightPizzaDetails;
-		LogHandler.createCustomer(sampleLog);
+		LogHandler.createCustomer(log);
 	}
 	
 	@Test (expected = LogHandlerException.class)
 	public void nonNumericLocationY() throws CustomerException, LogHandlerException {
 		ycoord = "a";
-		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
+		log = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
 				xcoord+','+ycoord+','+rightPizzaDetails;
-		LogHandler.createCustomer(sampleLog);
+		LogHandler.createCustomer(log);
 	}
 	
 	@Test (expected = LogHandlerException.class)
 	public void decimalLocationX() throws CustomerException, LogHandlerException {
 		xcoord = "5.55";
-		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
+		log = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
 				xcoord+','+ycoord+','+rightPizzaDetails;
-		LogHandler.createCustomer(sampleLog);
+		LogHandler.createCustomer(log);
 	}
 	
 	@Test (expected = LogHandlerException.class)
 	public void decimalLocationY() throws CustomerException, LogHandlerException {
 		ycoord = "5.55";
-		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
+		log = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
 				xcoord+','+ycoord+','+rightPizzaDetails;
-		LogHandler.createCustomer(sampleLog);
+		LogHandler.createCustomer(log);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void outOfRangeLocationX() throws CustomerException, LogHandlerException {
 		xcoord = "15";
 		ycoord = "5";
-		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
+		log = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
 				xcoord+','+ycoord+','+rightPizzaDetails;
-		LogHandler.createCustomer(sampleLog);
+		LogHandler.createCustomer(log);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void outOfRangeLocationY() throws CustomerException, LogHandlerException {
 		xcoord = "5";
 		ycoord = "15";
-		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
+		log = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
 				xcoord+','+ycoord+','+rightPizzaDetails;
-		LogHandler.createCustomer(sampleLog);
+		LogHandler.createCustomer(log);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void nonNumericName() throws CustomerException, LogHandlerException {
 		name = "123";
-		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
+		log = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
 				xcoord+','+ycoord+','+rightPizzaDetails;
-		LogHandler.createCustomer(sampleLog);
+		LogHandler.createCustomer(log);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void tooManyLettersInName() throws CustomerException, LogHandlerException {
 		name = "Over Twentycharacters";
-		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
+		log = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
 				xcoord+','+ycoord+','+rightPizzaDetails;
-		LogHandler.createCustomer(sampleLog);
+		LogHandler.createCustomer(log);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void nonNumericCustomerCode() throws CustomerException, LogHandlerException {
 		customerCode = "123";
-		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
+		log = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
 				xcoord+','+ycoord+','+rightPizzaDetails;
-		LogHandler.createCustomer(sampleLog);
+		LogHandler.createCustomer(log);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void incorrectCustomerCode() throws CustomerException, LogHandlerException {
 		customerCode = "DVM";
-		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
+		log = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
 				xcoord+','+ycoord+','+rightPizzaDetails;
-		LogHandler.createCustomer(sampleLog);
+		LogHandler.createCustomer(log);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void tooManyLettersInCode() throws CustomerException, LogHandlerException {
 		customerCode = "DVCC";
-		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
+		log = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
 				xcoord+','+ycoord+','+rightPizzaDetails;
-		LogHandler.createCustomer(sampleLog);
+		LogHandler.createCustomer(log);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void notEnoughLettersInCode() throws CustomerException, LogHandlerException {
 		customerCode = "DV";
-		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
+		log = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
 				xcoord+','+ycoord+','+rightPizzaDetails;
-		LogHandler.createCustomer(sampleLog);
+		LogHandler.createCustomer(log);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void notMobileStartingWithZero() throws CustomerException, LogHandlerException {
 		mobileNumber = "1234567890";
-		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
+		log = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
 				xcoord+','+ycoord+','+rightPizzaDetails;
-		LogHandler.createCustomer(sampleLog);
+		LogHandler.createCustomer(log);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void notEnoughMobileNumbers() throws CustomerException, LogHandlerException {
 		mobileNumber = "012345678";
-		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
+		log = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
 				xcoord+','+ycoord+','+rightPizzaDetails;
-		LogHandler.createCustomer(sampleLog);
+		LogHandler.createCustomer(log);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void tooManyMobileNumbers() throws CustomerException, LogHandlerException {
 		mobileNumber = "01234567890";
-		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
+		log = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
 				xcoord+','+ycoord+','+rightPizzaDetails;
-		LogHandler.createCustomer(sampleLog);
+		LogHandler.createCustomer(log);
 	}
 	
-	@Test (expected = LogHandlerException.class)
+	@Test (expected = CustomerException.class)
 	public void nonNumericMobileNumber() throws CustomerException, LogHandlerException {
 		mobileNumber = "012345678o";
-		sampleLog = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
+		log = leftPizzaDetails+','+name+','+mobileNumber+','+customerCode+','+
 				xcoord+','+ycoord+','+rightPizzaDetails;
-		LogHandler.createCustomer(sampleLog);
+		LogHandler.createCustomer(log);
 	}
 	
 	//Throw an error if the file does not exist.
@@ -248,5 +247,26 @@ public class LogHandlerCustomerTests {
 	@Test (expected = LogHandlerException.class)
 	public void logFileWithoutCommas() throws LogHandlerException, CustomerException{
 		LogHandler.populateCustomerDataset(".\\logs\\logWithoutCommas");
+	}
+	
+	//Throw an error if there's a semantic error in the file
+	@Test(expected = CustomerException.class)
+	public void logFileWithInvalidCustomerName() throws LogHandlerException, CustomerException{
+		LogHandler.populateCustomerDataset(".\\logs\\logWithInvalidCustomerName");
+	}
+	
+	@Test(expected = CustomerException.class)
+	public void logFileWithInvalidMobileNumber() throws LogHandlerException, CustomerException{
+		LogHandler.populateCustomerDataset(".\\logs\\logWithInvalidMobileNumber");
+	}
+	
+	@Test(expected = CustomerException.class)
+	public void logFileWithInvalidLocationX() throws LogHandlerException, CustomerException{
+		LogHandler.populateCustomerDataset(".\\logs\\logWithInvalidLocationX");
+	}
+	
+	@Test(expected = CustomerException.class)
+	public void logFileWithInvalidLocationY() throws LogHandlerException, CustomerException{
+		LogHandler.populateCustomerDataset(".\\logs\\logWithInvalidLocationY");
 	}
 }

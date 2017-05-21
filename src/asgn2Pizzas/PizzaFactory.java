@@ -41,7 +41,7 @@ public class PizzaFactory {
 	
 	public static Pizza getPizza(String pizzaCode, int quantity, LocalTime orderTime, LocalTime deliveryTime) throws PizzaException {
 			if (!pizzaCodes.contains(pizzaCode)) {
-				throw new PizzaException("Invalid customer code");
+				throw new PizzaException("Invalid pizza code");
 			}//end if
 			try {
 				if (pizzaCode.equals("PZL")){

@@ -46,7 +46,8 @@ public abstract class Customer {
 	int locationX;
 	int locationY;
 	String type;
-	final static Set<String> TYPES= new HashSet<String>(Arrays.asList(new String[]{"Pick Up", "Driver Delivery", "Drone Delivery"}));
+	//need to get rid of this.
+	//final static Set<String> TYPES= new HashSet<String>(Arrays.asList(new String[]{"Pick Up", "Driver Delivery", "Drone Delivery"}));
 	
 	public Customer(String name, String mobileNumber, int locationX, int locationY, String type) throws CustomerException{
 		String nameRegex = "[a-zA-Z' ]*[a-zA-Z]+[a-zA-Z ]*";
@@ -55,14 +56,14 @@ public abstract class Customer {
 		String mobileRegex = "[0-9]+";
 		Pattern mobilePattern = Pattern.compile(mobileRegex);
     	Matcher mobileMatcher = mobilePattern.matcher(mobileNumber);
-			//if length of the name is 0, or more than 20, or only contains space(or has non-alphabet characters), 
+			//Throw exception if length of the name is 0, or more than 20
 		if ((name.length()<MIN_NAME_LENGTH) || (name.length()>MAX_NAME_LENGTH)){
 			throw new CustomerException("Invalid customer name length");
-			//if the name contains characters other than alphabet
+			//Throw exception if the name contains characters other than alphabet or spaces and when there are only white spaces
 		} else if (!nameMatcher.matches()){
 			throw new CustomerException("Invalid customer name: Contains non alphabet characters");
-			//Throw exception if the the type passed is not valid
-		} else if (!TYPES.contains(type)){
+			//Throw exception if the the type is not valid
+		} else if (!type.equals("Pick Up") && !type.equals("Driver Delivery") && !type.equals("Drone Delivery")){
 			throw new CustomerException("Invalid customer type");
 			//if the length of the mobile number is not 10, or if the mobile number does not start with '0' or if the string contains non-numeric characters
 		} else if (mobileNumber.length()!= MOBILE_NUM_LENGTH || mobileNumber.toCharArray()[0] != '0' || !mobileMatcher.matches()){
@@ -79,7 +80,9 @@ public abstract class Customer {
 			if (locationX == 0 && locationY == 0){
 				throw new CustomerException("Invalid drone delivery customer location");
 			}
-		} else if (locationX > 10 || locationX < -10 || locationY > 10 || locationY < -10){
+		}
+		//Test that the location is not beyond acceptable range.
+		if (locationX > 10 || locationX < -10 || locationY > 10 || locationY < -10){
 			throw new CustomerException("Customer located more than 10 blocks north/south/west/east of restaurant");
 		}
 		this.name = name;
@@ -159,5 +162,10 @@ public abstract class Customer {
 			(this.getLocationY() == otherCustomer.getLocationY()) && 
 			(this.getCustomerType().equals(otherCustomer.getCustomerType())) );			
 	}
-
+	
+	//A method to round deliveryDistance
+	protected static double round (double value, int precision) {
+	    int scale = (int) Math.pow(10, precision);
+	    return (double) Math.round(value * scale) / scale;
+	}
 }

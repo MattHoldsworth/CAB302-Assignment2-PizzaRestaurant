@@ -45,7 +45,8 @@ public class DroneDeliveryCustomer extends Customer {
 		double xDiff = Math.pow((locationX - RESTAURANT_X), 2);
 		double yDiff = Math.pow((locationY - RESTAURANT_Y), 2);
 		distance = Math.sqrt(xDiff + yDiff);
-		return distance;
+		//Return a distance with 1 decimal point
+		return round(distance, 1);
 	}
 	
 

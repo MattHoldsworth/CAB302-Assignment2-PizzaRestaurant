@@ -40,17 +40,14 @@ public class CustomerFactoryTests {
 	public void setUp() throws CustomerException {
 		name = "Bob";
 		mobileNumber = "0123456789";
-		/*
-		 The location is throwing error for the pick up customer
-		 */
-		locationX = 1;
-		locationY = 1;
-		
-		driverDeliveryCustomer = new DriverDeliveryCustomer(name, mobileNumber, locationX, locationY);
-		droneDeliveryCustomer = new DroneDeliveryCustomer(name, mobileNumber, locationX, locationY);
 		locationX = RESTAURANT_X;
 		locationY = RESTAURANT_Y;
 		pickUpCustomer = new PickUpCustomer(name, mobileNumber, locationX, locationY);
+		locationX = 1;
+		locationY = 1;	
+		driverDeliveryCustomer = new DriverDeliveryCustomer(name, mobileNumber, locationX, locationY);
+		droneDeliveryCustomer = new DroneDeliveryCustomer(name, mobileNumber, locationX, locationY);
+		
 	}
 	
 	//Test if error is thrown if an empty string is passed
@@ -86,22 +83,18 @@ public class CustomerFactoryTests {
 	
 	@Test (expected = CustomerException.class)
 	public void spaceBetweenString() throws CustomerException {
-		CustomerFactory.getCustomer("D V C", name, mobileNumber, locationX, locationY);
+		CustomerFactory.getCustomer("D C", name, mobileNumber, locationX, locationY);
 	}
 	
 	//Test if correct objects are instantiated
 	@Test
 	public void instantiateDriverCustomer() throws CustomerException {
-		locationX = 1;
-		locationY = 1;
 		Customer driverDelivery2 = CustomerFactory.getCustomer(DRIVER, name, mobileNumber, locationX, locationY);
 		assertEquals(true, driverDeliveryCustomer.equals(driverDelivery2));
 	}
 	
 	@Test
 	public void instantiateDroneCustomer() throws CustomerException {
-		locationX = 1;
-		locationY = 1;
 		Customer droneDelivery2 = CustomerFactory.getCustomer(DRONE, name, mobileNumber, locationX, locationY);
 		assertEquals(true, droneDeliveryCustomer.equals(droneDelivery2));
 	}
@@ -114,5 +107,24 @@ public class CustomerFactoryTests {
 		assertEquals(true, pickUpCustomer.equals(pickUpCustomer2));
 	}
 	
+	//Test that customerException propagates from customer classes
+	@Test (expected = CustomerException.class)
+	public void invalidName() throws CustomerException{
+		CustomerFactory.getCustomer(DRONE, "  ", mobileNumber, locationX, locationY);
+	}
 	
+	@Test (expected = CustomerException.class)
+	public void invalidMobile() throws CustomerException{
+		CustomerFactory.getCustomer(DRONE, name, "3456789", locationX, locationY);
+	}
+	
+	@Test (expected = CustomerException.class)
+	public void invalidLocationX() throws CustomerException{
+		CustomerFactory.getCustomer(DRONE, name, mobileNumber, -20, locationY);
+	}
+	
+	@Test (expected = CustomerException.class)
+	public void invalidLocationY() throws CustomerException{
+		CustomerFactory.getCustomer(DRONE, name, mobileNumber, locationX, 20);
+	}
 }
