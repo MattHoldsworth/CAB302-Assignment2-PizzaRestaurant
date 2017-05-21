@@ -7,7 +7,7 @@ import asgn2Exceptions.CustomerException;
  * Distance between the customer and the restaurant.  A description of the class's
  * fields and their constraints is provided in Section 5.2 of the Assignment Specification.
  * 
- * @author PersonB
+ * @author Gyeongmin Jee
  *
  */
 public class DroneDeliveryCustomer extends Customer {
@@ -45,8 +45,7 @@ public class DroneDeliveryCustomer extends Customer {
 		double xDiff = Math.pow((locationX - RESTAURANT_X), 2);
 		double yDiff = Math.pow((locationY - RESTAURANT_Y), 2);
 		distance = Math.sqrt(xDiff + yDiff);
-		//Return a distance with 1 decimal point
-		return round(distance, 1);
+		return distance;
 	}
 	
 

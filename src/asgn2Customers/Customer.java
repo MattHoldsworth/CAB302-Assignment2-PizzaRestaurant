@@ -162,10 +162,4 @@ public abstract class Customer {
 			(this.getLocationY() == otherCustomer.getLocationY()) && 
 			(this.getCustomerType().equals(otherCustomer.getCustomerType())) );			
 	}
-	
-	//A method to round deliveryDistance
-	protected static double round (double value, int precision) {
-	    int scale = (int) Math.pow(10, precision);
-	    return (double) Math.round(value * scale) / scale;
-	}
 }

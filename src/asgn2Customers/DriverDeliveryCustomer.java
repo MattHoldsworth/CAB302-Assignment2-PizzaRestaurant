@@ -42,8 +42,7 @@ public class DriverDeliveryCustomer extends Customer {
 	public double getDeliveryDistance() {
 		double distance;	
 		distance = Math.abs(locationX - RESTAURANT_X) + Math.abs(locationY - RESTAURANT_Y);
-		//Return a double with 1 decimal point
-		return round(distance, 1);
+		return distance;
 	}
 
 }

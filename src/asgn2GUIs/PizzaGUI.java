@@ -34,7 +34,7 @@ import javax.swing.*;
  * You can also use this class and asgn2Wizards.PizzaWizard to test your system as a whole
  * 
  * 
- * @author Person A and Person B
+ * @author Matthew Holdsworth and Gyeongmin Jee
  *
  */
 public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionListener {
@@ -48,16 +48,16 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	 */
 	final static int WIDTH = 900;
 	final static int HEIGHT = 400;
-
+	final static DecimalFormat decimalFormat = new DecimalFormat("#0.00"); 
+	
+	Boolean loaded = false;
+	
 	JTable customerTable;
-	JTable pizzaTable;
-	
+	JTable pizzaTable;	
 	DefaultTableModel customerModel;
-	DefaultTableModel pizzaModel;
-	
+	DefaultTableModel pizzaModel;	
 	JTextField totalDistance;
-	JTextField totalProfit;
-	
+	JTextField totalProfit;	
 	JButton open;
 	JButton view;
 	JButton total;
@@ -69,8 +69,20 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		JPanel displayPanel = new JPanel();
 		displayPanel.setLayout(new BorderLayout());
 		
-		//Create a model for the jtable that disables
-		//users from editing the table contents
+		//Create heading for the two tables
+		JPanel headingPanel = new JPanel();
+		JLabel customerHeading = new JLabel("Customer Details");
+		JLabel pizzaHeading = new JLabel("Pizza Details");
+		headingPanel.setLayout(new BoxLayout(headingPanel, BoxLayout.X_AXIS));
+		headingPanel.add(Box.createHorizontalGlue());
+		headingPanel.add(customerHeading);
+		headingPanel.add(Box.createHorizontalGlue());
+		headingPanel.add(Box.createHorizontalGlue());
+		headingPanel.add(pizzaHeading);
+		headingPanel.add(Box.createHorizontalGlue());
+		displayPanel.add(headingPanel, BorderLayout.NORTH);
+		
+		//Create a model for the jtable that disables users from editing the table contents
 		class myCustomerModel extends DefaultTableModel{
 			public myCustomerModel(String[] columns, int i){
 				super(columns, i);
@@ -80,24 +92,23 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 			}
 		}
 		
-		//Create a table with the custom table model
+		//Create tables
 		String[] columns = {"Customer Name","Mobile","Type","X/Y location","Delivery Distance"};
 		customerTable = new JTable(new myCustomerModel(columns, 0));
-		
-		//Add the customer table the display panel
 		displayPanel.add(new JScrollPane(customerTable), BorderLayout.WEST);
 		String[] columns2 = {"Pizza Type","Quantity","Order Price","Order Cost","Order Profit"};
-		DefaultTableModel pizzaModel = new DefaultTableModel(columns2, 0);
-		pizzaTable = new JTable(pizzaModel);
+		pizzaTable = new JTable(new myCustomerModel(columns2, 0));
 		displayPanel.add(new JScrollPane(pizzaTable), BorderLayout.EAST);
 		
-		//Total value
+		//Total value fields
 		JPanel totalValuePanel = new JPanel();
 		totalValuePanel.setLayout(new FlowLayout());
 		JLabel totalDist = new JLabel("Total Distance:");
 		JLabel totalProf = new JLabel("Total Profit:");
 		totalDistance = new JTextField(10);
+		totalDistance.setEditable(false);
 		totalProfit = new JTextField(10);
+		totalProfit.setEditable(false);
 		totalValuePanel.add(totalDist);
 		totalValuePanel.add(totalDistance);
 		totalValuePanel.add(totalProf);
@@ -139,7 +150,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	public void actionPerformed(ActionEvent e) {
 		String buttonString = e.getActionCommand();
 		if (buttonString == "open"){
-			openFile();		
+			openFile();			
 		} else if (buttonString == "view"){
 			updateTables();
 		} else if (buttonString == "total"){
@@ -150,31 +161,34 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	}
 
 	public void openFile(){
-		JFileChooser fc = new JFileChooser();
-		int returnVal = fc.showOpenDialog(this);
-		if (returnVal == JFileChooser.APPROVE_OPTION){
-			File file = fc.getSelectedFile();
-			String filenameString = file.getName();
-			String path = ".\\logs\\" + filenameString;
-				try {
-					restaurant.processLog(path);	
-				} catch (CustomerException e) {
-					JOptionPane.showMessageDialog(this, e.getMessage(), "Customer data error",
-						    JOptionPane.ERROR_MESSAGE);
-					e.printStackTrace();
-					System.exit(0);
-				} catch (PizzaException e) {
-					JOptionPane.showMessageDialog(this, e.getMessage(), "Pizza data error",
-						    JOptionPane.ERROR_MESSAGE);
-					e.printStackTrace();
-					System.exit(0);
-				} catch (LogHandlerException e) {
-					JOptionPane.showMessageDialog(this, e.getMessage(), "Log error",
-						    JOptionPane.ERROR_MESSAGE);
-					e.printStackTrace();
-					System.exit(0);
-				}
-		} else if (returnVal == JFileChooser.CANCEL_OPTION){
+		if (loaded == false){		
+			JFileChooser fc = new JFileChooser();
+			int returnVal = fc.showOpenDialog(this);
+			if (returnVal == JFileChooser.APPROVE_OPTION){
+				File file = fc.getSelectedFile();
+				String filenameString = file.getName();
+				String path = ".\\logs\\" + filenameString;
+					try {
+						restaurant.processLog(path);	
+						JOptionPane.showMessageDialog(this, "Successfully loaded a log file");
+						loaded = true;
+					} catch (CustomerException e) {
+						JOptionPane.showMessageDialog(this, e.getMessage(), "Customer data error",
+							    JOptionPane.ERROR_MESSAGE);
+						loaded = false;
+					} catch (PizzaException e) {
+						JOptionPane.showMessageDialog(this, e.getMessage(), "Pizza data error",
+							    JOptionPane.ERROR_MESSAGE);
+						loaded = false;
+					} catch (LogHandlerException e) {
+						JOptionPane.showMessageDialog(this, e.getMessage(), "Log error",
+							    JOptionPane.ERROR_MESSAGE);
+						loaded = false;
+					}
+			}
+		} else {
+			JOptionPane.showMessageDialog(this, "Please reset before loading another file", "Error",
+				    JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -184,14 +198,18 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 			customerModel = (DefaultTableModel)customerTable.getModel();
 			pizzaModel = (DefaultTableModel)pizzaTable.getModel();
 			int customerOrders, pizzaOrders;
-			if (((customerOrders = restaurant.getNumCustomerOrders()) != 0) || ((pizzaOrders = restaurant.getNumPizzaOrders()) != 0)) {
+			customerOrders = restaurant.getNumCustomerOrders();
+			pizzaOrders = restaurant.getNumPizzaOrders();
+			if (loaded) {
 				for (int i=0; i< customerOrders; i++){
 					Customer customer = restaurant.getCustomerByIndex(i);
 					data.add(customer.getName());
 					data.add(customer.getMobileNumber());
 					data.add(customer.getCustomerType());
 					data.add(customer.getLocationX()+"/"+customer.getLocationY());
-					data.add(customer.getDeliveryDistance());
+					//Round the distance to 2 decimal places
+					String distanceFormatted = decimalFormat.format(customer.getDeliveryDistance());
+					data.add(distanceFormatted);
 					Object[] row = new Object[data.size()];
 					row = data.toArray(row);
 					customerModel.addRow(row);
@@ -204,14 +222,17 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 						data.add(pizza.getPizzaType());
 						data.add(pizza.getQuantity());
 						data.add(pizza.getOrderPrice());
-						data.add(pizza.getOrderCost());
-						data.add(pizza.getOrderProfit());
+						String costFormatted = decimalFormat.format(pizza.getOrderCost());
+						data.add("$"+costFormatted);
+						String profitFormatted = decimalFormat.format(pizza.getOrderProfit());
+						data.add("$"+profitFormatted);
 						Object[] row = new Object[data.size()];
 						row = data.toArray(row);
 						pizzaModel.addRow(row);
 						data.clear();
 					}
 				}
+				JOptionPane.showMessageDialog(this, "Successfully displayed the data");
 			} else {
 				JOptionPane.showMessageDialog(this, "You must load a log file first", "Error",
 					    JOptionPane.ERROR_MESSAGE);
@@ -220,28 +241,27 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		} catch (CustomerException e){
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Error displaying customer data",
 				    JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-			System.exit(0);
+			loaded = false;
 		} catch (PizzaException e){
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Error displaying Pizza data",
 				    JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-			System.exit(0);
+			loaded = false;
 		} catch (Exception e){
-			JOptionPane.showMessageDialog(this, e.getMessage(), "Error displaying data",
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Error displaying data.",
 				    JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-			System.exit(0);
+			loaded = false;
 		}
 	}
 	
 	public void updateTotal(){
-		//If log file has been loaded and processed get the total. Else, throw an error message
-		if (((restaurant.getNumCustomerOrders()) != 0) || ((restaurant.getNumPizzaOrders()) != 0)){
+		if (loaded){
 			//Update total delivery distance
-			totalDistance.setText(String.valueOf(restaurant.getTotalDeliveryDistance()));
+			String totalDistanceFormatted = decimalFormat.format(restaurant.getTotalDeliveryDistance());
+			totalDistance.setText(totalDistanceFormatted);
 			//Update total profit
-			totalProfit.setText(String.valueOf(restaurant.getTotalProfit()));
+			String totalProfitFormatted = decimalFormat.format(restaurant.getTotalProfit());
+			totalProfit.setText('$'+totalProfitFormatted);
+			JOptionPane.showMessageDialog(this, "Successfully calculated the total");
 		} else {
 			JOptionPane.showMessageDialog(this,"You must load a log file first", "Error",
 				    JOptionPane.ERROR_MESSAGE);
@@ -249,7 +269,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	}
 	
 	public void reset(){
-		if (((restaurant.getNumCustomerOrders()) != 0) || ((restaurant.getNumPizzaOrders()) != 0)){
+		if (loaded){
 			restaurant.resetDetails();
 			if (customerModel.getRowCount() > 0 && pizzaModel.getRowCount() > 0){
 				for (int i= customerModel.getRowCount()-1; i > -1 ; i--){
@@ -262,6 +282,8 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 			}
 			totalDistance.setText("");
 			totalProfit.setText("");
+			JOptionPane.showMessageDialog(this, "Reset successful");
+			loaded = false;
 		} else {
 			JOptionPane.showMessageDialog(this,"You must load a log file first", "Error",
 				    JOptionPane.ERROR_MESSAGE);
