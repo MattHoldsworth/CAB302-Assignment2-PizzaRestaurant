@@ -120,8 +120,9 @@ public abstract class Pizza  {
 	 * @return  Returns the profit made by the restaurant on the order which is the order price minus the order cost.
 	 */
 	public final double getOrderProfit(){
-		this.profit = getOrderPrice() - getOrderCost();
+		profit = (getOrderPrice() - getOrderCost());
 		return profit;
+				
 	}//end
 	
 
