@@ -47,8 +47,7 @@ public class CustomerFactoryTests {
 		locationY = 1;	
 		driverDeliveryCustomer = new DriverDeliveryCustomer(name, mobileNumber, locationX, locationY);
 		droneDeliveryCustomer = new DroneDeliveryCustomer(name, mobileNumber, locationX, locationY);
-		
-	}
+	}//end SetUp
 	
 	//Test if error is thrown if an empty string is passed
 	@Test (expected = CustomerException.class)
@@ -127,4 +126,4 @@ public class CustomerFactoryTests {
 	public void invalidLocationY() throws CustomerException{
 		CustomerFactory.getCustomer(DRONE, name, mobileNumber, locationX, 20);
 	}
-}
+}//end CustomerFactoryTests

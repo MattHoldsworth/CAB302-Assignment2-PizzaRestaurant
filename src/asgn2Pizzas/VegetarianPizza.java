@@ -16,8 +16,9 @@ import asgn2Exceptions.PizzaException;
  *
  */
 public class VegetarianPizza extends Pizza {
-	
+	//The type of pizza
 	private static String type = "Vegetarian";
+	//The price of the pizza paid by the customer "$"
 	private static double price = 10;
 	
 	/**
@@ -36,12 +37,15 @@ public class VegetarianPizza extends Pizza {
 	 *
 	 */
 	public VegetarianPizza(int quantity, LocalTime orderTime, LocalTime deliveryTime) throws PizzaException {
+		//Calls the supercalss method using supplied parameters and fields
 		super(quantity, orderTime, deliveryTime, type, price);
+		//Clears the toppings array and adds the new toppings to it
 		toppings.clear();
 		toppings.add(PizzaTopping.TOMATO);
 		toppings.add(PizzaTopping.CHEESE);
 		toppings.add(PizzaTopping.EGGPLANT);
 		toppings.add(PizzaTopping.MUSHROOM);
 		toppings.add(PizzaTopping.CAPSICUM);
-	}
-}
+	}//end constructor
+	
+}//end VegetarianPizza

@@ -34,6 +34,7 @@ public class LogHandler {
 	final static String COMMA = ",";
 	private static ArrayList<Customer> customers;
 	private static ArrayList<Pizza> pizzas;
+	private static String[] pizzaParameters;
 	
 	/**
 	 * Returns an ArrayList of Customer objects from the information contained in the log file ordered as they appear in the log file.
@@ -72,23 +73,29 @@ public class LogHandler {
 	 */
 	public static ArrayList<Pizza> populatePizzaDataset(String filename) throws PizzaException, LogHandlerException {
 		try {
+			//Create new arraylist 'pizzas'
 			pizzas = new ArrayList<Pizza>();
+			//Create new buffered reader to read in the log file
 			BufferedReader reader = new BufferedReader(new FileReader(filename));
+			//Store the input in a variable
 			String input = reader.readLine();
+			//While that variable is not empty, add pizza to dataset
 			while (input != null) {
 				pizzas.add(createPizza(input));
 				input = reader.readLine();
-			}
+			}//end while loop
+			//Close the reader and return the arraylist
 			reader.close();
 			return pizzas;
 		} catch (PizzaException e) {
+			//To catch invalid pizza exceptions
 			throw new PizzaException(e.getMessage());
 		} catch (Exception e) {
+			//To catch invalid log file input
 			throw new LogHandlerException(e.getMessage());
-		}
-	}		
+		}//end try-catch block
+	}//end PopulateDataSet<Pizza>		
 
-	
 	/**
 	 * Creates a Customer object by parsing the  information contained in a single line of the log file. The format of 
 	 * each line is outlined in Section 5.3 of the Assignment Specification.  
@@ -132,26 +139,34 @@ public class LogHandler {
 	 * @throws LogHandlerException - If there was a problem parsing the line from the log file.
 	 */
 	public static Pizza createPizza(String line) throws PizzaException, LogHandlerException{
+		//Throw exception if the line passed is empty or contains no commas
 		if (line == "" || !line.contains(COMMA)){
 			throw new LogHandlerException("The line is empty or is not comma separated");
-		}
-		String[] parameters = line.split(COMMA);
-		if (parameters.length != LOG_STRING_NUM_PARAMETERS){
+		}//end if
+		//Split the input by each comma and add to 'parameters' array
+		String[] pizzaParameters = line.split(COMMA);
+		//If the length of the array is not equal to the expected number of log parameters, throw exception
+		if (pizzaParameters.length != LOG_STRING_NUM_PARAMETERS){
 			throw new LogHandlerException("A line does not contain the right number of parameters");
-		}
+		}//end if
 		try {
-			String pizzaCode = parameters[7];
-			int quantity = Integer.parseInt(parameters[8]);
+			//Assign parameters to respective fields with parsing
+			String pizzaCode = pizzaParameters[7];
+			int quantity = Integer.parseInt(pizzaParameters[8]);
+			//Used to check that the time format is "HH:mm:ss"
 			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-			LocalTime orderTime = LocalTime.parse(parameters[0], formatter);
-			LocalTime deliveryTime = LocalTime.parse(parameters[1], formatter);
+			LocalTime orderTime = LocalTime.parse(pizzaParameters[0], formatter);
+			LocalTime deliveryTime = LocalTime.parse(pizzaParameters[1], formatter);
+			//Creates a new pizza with the provided parameters and returns it
 			Pizza newPizza = PizzaFactory.getPizza(pizzaCode, quantity, orderTime, deliveryTime);
 			return newPizza;
 		} catch (PizzaException e) {
+			//To catch invalid pizza exceptions
 			throw new PizzaException(e.getMessage());
 		} catch (Exception e) {
+			//To catch invalid logfile input exceptions
 			throw new LogHandlerException("Parsing error. Incorrect orderTime, deliveryTime or quantity");
-		}
-	}
+		}//end try-catch block
+	}//end CreatePizza
 
-}
+}//end LogHandler

@@ -88,11 +88,12 @@ public class PizzaRestaurant {
 	 * @throws PizzaException if index is invalid.
 	 */	
 	public Pizza getPizzaByIndex(int index) throws PizzaException{
+		//Throw exception if index passed is less than zero or greater than number of orders
 		if (index < 0 || index > NUM_ORDERS - 1){
 			throw new PizzaException();
-		}
+		}//end if
 		return pizzas.get(index);
-	}
+	}//end GetPizzaByIndex
 	
 	/**
 	 * Returns the number of objects contained in the pizzas field. This value SHOULD be the same as 
@@ -102,7 +103,7 @@ public class PizzaRestaurant {
 	 */
 	public int getNumPizzaOrders(){
 		return pizzas.size();
-	}
+	}//end
 
 	/**
 	 * Returns the number of objects contained in the customers field. This value SHOULD be the same as 
@@ -133,12 +134,14 @@ public class PizzaRestaurant {
 	 * @return the total profit for all of the Pizza objects in the pizzas field.
 	 */	
 	public double getTotalProfit(){
+		//Safeguard against previous calculations
 		double profit = 0;
+		//Add together profit from each order
 		for (Pizza pizza : pizzas) {
 			profit += pizza.getOrderProfit();
-		}
+		}//end for loop
 		return profit;
-	}
+	}//end GetTotalProfit
 	
 	/**
 	 * Resets the pizzas and customers fields to their initial empty states.
@@ -149,6 +152,6 @@ public class PizzaRestaurant {
 	public void resetDetails(){
 		customers.clear();
 		pizzas.clear();
-	}
+	}//end ResetDetails
 
-}
+}//end PizzaRestaurant

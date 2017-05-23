@@ -16,7 +16,9 @@ import asgn2Exceptions.PizzaException;
  *
  */
 public class MargheritaPizza extends Pizza {
+	//The type of pizza
 	private static String type = "Margherita";
+	//The price of the pizza paid by the customer "$"
 	private static double price = 8;
 	
 	/**
@@ -36,10 +38,12 @@ public class MargheritaPizza extends Pizza {
 	 *
 	 */
 	public MargheritaPizza(int quantity, LocalTime orderTime, LocalTime deliveryTime) throws PizzaException {
-			super(quantity, orderTime, deliveryTime, type, price);
-			toppings.clear();
-			toppings.add(PizzaTopping.CHEESE);
-			toppings.add(PizzaTopping.TOMATO);
-
-	}
-}
+		//Calls superclass method using supplied parameters and fields
+		super(quantity, orderTime, deliveryTime, type, price);
+		//clears the toppings array and adds the new toppings to it
+		toppings.clear();
+		toppings.add(PizzaTopping.CHEESE);
+		toppings.add(PizzaTopping.TOMATO);
+	}//end constructor
+	
+}//end MargheritaPizza

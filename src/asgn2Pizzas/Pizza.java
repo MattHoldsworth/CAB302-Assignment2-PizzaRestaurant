@@ -18,20 +18,29 @@ import asgn2Exceptions.PizzaException;
  *
  */
 public abstract class Pizza  {
-	
-	protected double cost;
-	private double price;
+	//Total profit made on the order
 	private double profit;
+	//The cost of an order
+	private double cost;
+	//Fields supplied by the subclass
+	private double price;
 	private String type;
-	protected int quantity;
+	private int quantity;
 	private LocalTime orderTime;
 	private LocalTime deliveryTime;
+	//Strings of each time for string comparison
 	private String orderTimeString;
 	private String deliveryTimeString;
+	//Minimum time for an order
 	private String minOrderTime = "19:00:00";
+	//Maximum time for an order
 	private String maxOrderTime = "22:59:00";
+	//Minimum and maximum order time strings as LocalTime type
 	private LocalTime minimum = LocalTime.parse(minOrderTime);
 	private LocalTime maximum = LocalTime.parse(maxOrderTime);
+	//Boolean to determine if a topping is on a pizza
+	private boolean onPizza;
+	//Array list accessed by the subclass
 	protected ArrayList<PizzaTopping> toppings = new ArrayList<PizzaTopping>();
 	
 	/**
@@ -52,19 +61,22 @@ public abstract class Pizza  {
 	 * 
 	 */
 	public Pizza(int quantity, LocalTime orderTime, LocalTime deliveryTime, String type, double price) throws PizzaException {
+		//Conversion to strings
 		orderTimeString = orderTime.toString();
 		deliveryTimeString = deliveryTime.toString();
+		//Throw exception if quantity is less than 1 or greater than 10, if the string is empty, or if it is at an unacceptable time
 		if ((quantity < 1) || (quantity > 10) || (orderTimeString.isEmpty()) || (deliveryTimeString.isEmpty()) ||
 				(orderTime.isBefore(minimum)) ||(orderTime.isAfter(maximum)) ||(orderTime.isAfter(deliveryTime)) ||
 				(orderTime.plusMinutes(10).isAfter(deliveryTime)) || (deliveryTime.isAfter(orderTime.plusMinutes(59)))) {
 			throw new PizzaException();
 		} else {
+			//Set the fields (with parsing) to the parameters passed by the subclass
 			this.quantity = quantity;
 			this.orderTime = LocalTime.parse(orderTimeString);
 			this.deliveryTime = LocalTime.parse(deliveryTimeString);
 			this.type = type;
 			this.price = price;
-		}
+		}//end if-else
 	}//end constructor
 
 	/**
@@ -73,13 +85,15 @@ public abstract class Pizza  {
      * <P> PRE: TRUE
 	 * <P> POST: The cost field is set to sum of the Pizzas's toppings
 	 */
-	
 	public final void calculateCostPerPizza() {
+		//Sets the cost field to zero
 		this.cost = 0;
+		//For each topping in the arraylist toppings,
+		//get the cost associated with it and add it to cost
 		for (PizzaTopping topping : toppings) {
 			this.cost += topping.getCost();
-		}
-	}
+		}//end for loop
+	}//end CalculateCostPerPizza
 	
 	/**
 	 * Returns the amount that an individual pizza costs to make.
@@ -102,9 +116,11 @@ public abstract class Pizza  {
 	 * @return The amount that the entire order costs to make, taking into account the type and quantity of pizzas. 
 	 */
 	public final double getOrderCost(){
+		//Calculates a new cost per pizza
 		calculateCostPerPizza();
+		//Returns cost per pizza multiplied by quantity
 		return this.cost * this.quantity;
-	}//end 
+	}//end GetOrderCost
 	
 	/**
 	 * Returns the amount that the entire order is sold to the customer, taking into account the type and quantity of pizzas. 
@@ -114,17 +130,13 @@ public abstract class Pizza  {
 		return this.price * this.quantity;
 	}//end
 	
-	
 	/**
 	 * Returns the profit made by the restaurant on the order which is the order price minus the order cost. 
 	 * @return  Returns the profit made by the restaurant on the order which is the order price minus the order cost.
 	 */
 	public final double getOrderProfit(){
-		profit = (getOrderPrice() - getOrderCost());
-		return profit;
-				
+		return profit = (getOrderPrice() - getOrderCost());				
 	}//end
-	
 
 	/**
 	 * Indicates if the pizza contains the specified pizza topping or not. 
@@ -132,13 +144,16 @@ public abstract class Pizza  {
 	 * @return Returns  true if the instance of Pizza contains the specified topping and false otherwise.
 	 */
 	public final boolean containsTopping(PizzaTopping topping){
-		boolean onPizza = true;
+		//Initializes onPizza boolean variable
+		onPizza = true;
+		//If the arraylist toppings contains the topping passed,
+		//return onPizza, else return !onPizza
 		if (toppings.contains(topping)) {
 			return onPizza;
 		} else {
 			return !onPizza;
-		}
-	}//end containsTopping(PizzaTopping)
+		}//end if-else
+	}//end ContainsTopping(PizzaTopping)
 	
 	/**
 	 * Returns the quantity of pizzas ordered. 
@@ -156,7 +171,6 @@ public abstract class Pizza  {
 	public final String getPizzaType(){
 		return this.type;
 	}//end
-
 
 	/**
 	 * Compares *this* Pizza object with an instance of an *other* Pizza object and returns true if  
@@ -179,4 +193,5 @@ public abstract class Pizza  {
 			(this.getPricePerPizza()) == (otherPizza.getPricePerPizza()) &&
 			(this.getQuantity()) == (otherPizza.getQuantity()));
 	}//end
+	
 }//end Pizza class

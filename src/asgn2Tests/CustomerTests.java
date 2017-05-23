@@ -50,13 +50,8 @@ public class CustomerTests {
 		locationY = 5;
 		driverDeliveryCustomer = new DriverDeliveryCustomer(name, mobileNumber, locationX, locationY);
 		droneDeliveryCustomer = new DroneDeliveryCustomer(name, mobileNumber, locationX, locationY);
-	}
+	}//end SetUp
 	
-	/*
-	 For: driverNameMaximum, droneNameMaximum, pickUpNamerMaximum
-	 Should update the name variable to match length of MAX_NAME_LENGTH. 
-	 The setup method initializes the name variable to three characters.
-	 */
 	@Test
 	public void driverNameMaximum() throws CustomerException {
 		name = "Twentycharactersssss";
@@ -87,7 +82,6 @@ public class CustomerTests {
 		assertEquals (MIN_NAME_LENGTH, driverDeliveryCustomer.getName().length());
 	}
 	
-	//fail
 	@Test
 	public void droneNameMinimum() throws CustomerException {
 		name = "T";
@@ -95,7 +89,6 @@ public class CustomerTests {
 		assertEquals (MIN_NAME_LENGTH, droneDeliveryCustomer.getName().length());
 	}
 	
-	//fail
 	@Test
 	public void pickUpNameMinimum() throws CustomerException {
 		locationX = RESTAURANT_X;
@@ -104,7 +97,6 @@ public class CustomerTests {
 		pickUpCustomer = new PickUpCustomer(name, mobileNumber, locationX, locationY);
 		assertEquals (MIN_NAME_LENGTH, pickUpCustomer.getName().length());
 	}
-	
 	
 	//Border value tests for name
 	@Test (expected = CustomerException.class)
@@ -253,9 +245,7 @@ public class CustomerTests {
 		assertEquals (MIN_LOCATION_X, droneDeliveryCustomer.getLocationX());
 	}
 
-	/*
-	 Pick up customer's location should always be 0, 0
-	 */
+	//Pick up customer's location should always be 0, 0
 	@Test
 	public void pickUpLocationXMinimum() throws CustomerException {
 		locationX = RESTAURANT_X;
@@ -407,4 +397,5 @@ public class CustomerTests {
 		assertEquals(mobileNumber2, droneDeliveryCustomer2.getMobileNumber());
 		assertEquals(mobileNumber, droneDeliveryCustomer.getMobileNumber());
 	}
-}
+	
+}//end CustomerTests

@@ -45,7 +45,7 @@ public class LogHandlerCustomerTests {
 		locationX = Integer.parseInt(xcoord);
 		locationY = Integer.parseInt(ycoord);
 		driverDelivery = new DriverDeliveryCustomer(name, mobileNumber, locationX, locationY);	
-	}
+	}//end SetUp
 	
 	@Test
 	public void createCustomerString() throws CustomerException, LogHandlerException {
@@ -269,4 +269,5 @@ public class LogHandlerCustomerTests {
 	public void logFileWithInvalidLocationY() throws LogHandlerException, CustomerException{
 		LogHandler.populateCustomerDataset(".\\logs\\logWithInvalidLocationY");
 	}
-}
+	
+}//end LogHandlerCustomerTests

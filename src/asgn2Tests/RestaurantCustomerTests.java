@@ -31,7 +31,7 @@ public class RestaurantCustomerTests {
 	public void setUp() throws CustomerException, PizzaException, LogHandlerException {
 		pizzaRestaurant = new PizzaRestaurant();
 		order = LogHandler.createCustomer(orderString);
-	}
+	}//end SetUp
 	
 	@Test
 	public void initialState() {
@@ -100,4 +100,5 @@ public class RestaurantCustomerTests {
 		pizzaRestaurant.resetDetails();
 		pizzaRestaurant.getCustomerByIndex(0);
 	}
-}
+	
+}//end RestaurantCustomerTests
