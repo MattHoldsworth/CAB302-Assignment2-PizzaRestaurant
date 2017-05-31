@@ -42,7 +42,6 @@ public class LogHandler {
 	 * @return an ArrayList of Customer objects from the information contained in the log file ordered as they appear in the log file. 
 	 * @throws CustomerException If the log file contains semantic errors leading that violate the customer constraints listed in Section 5.3 of the Assignment Specification or contain an invalid customer code (passed by another class).
 	 * @throws LogHandlerException If there was a problem with the log file not related to the semantic errors above
-	 * @throws FileNotFoundException 
 	 */
 	public static ArrayList<Customer> populateCustomerDataset(String filename) throws CustomerException, LogHandlerException{		 
 		 try{
