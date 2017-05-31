@@ -40,8 +40,8 @@ public class LogHandler {
 	 * Returns an ArrayList of Customer objects from the information contained in the log file ordered as they appear in the log file.
 	 * @param filename The file name of the log file
 	 * @return an ArrayList of Customer objects from the information contained in the log file ordered as they appear in the log file. 
-	 * @throws CustomerException If the log file contains semantic errors leading that violate the customer constraints listed in Section 5.3 of the Assignment Specification or contain an invalid customer code (passed by another class).
-	 * @throws LogHandlerException If there was a problem with the log file not related to the semantic errors above
+	 * @throws CustomerException If the log file contains an invalid customer code that is not one of PUC, DNC or DVC, or the log file contains invalid customer detail such that constructor of each customer types throw CustomerException.
+	 * @throws LogHandlerException If there was a problem with the log file not related to the semantic errors above such as parsing errors and invalid number of parameters, or if there are other exceptions not specified such as accessing invalid index.
 	 */
 	public static ArrayList<Customer> populateCustomerDataset(String filename) throws CustomerException, LogHandlerException{		 
 		 try{
@@ -68,7 +68,7 @@ public class LogHandler {
 	 * @return an ArrayList of Pizza objects from the information contained in the log file ordered as they appear in the log file. .
 	 * @throws PizzaException If the log file contains semantic errors leading that violate the pizza constraints listed in Section 5.3 of 
 	 * the Assignment Specification or contain an invalid pizza code (passed by another class).
-	 * @throws LogHandlerException If there was a problem with the log file not related to the semantic errors above, or if there are other exceptions not specified.
+	 * @throws LogHandlerException If there was a problem with the log file not related to the semantic errors above such as parsing errors and invalid number of parameters, or if there are other exceptions not specified such as accessing invalid index.
 	 * 
 	 */
 	public static ArrayList<Pizza> populatePizzaDataset(String filename) throws PizzaException, LogHandlerException {
@@ -102,7 +102,7 @@ public class LogHandler {
 	 * @param line - A line from the log file
 	 * @return- A Customer object containing the information from the line in the log file
 	 * @throws CustomerException - If the log file contains semantic errors (invalid customer detail) that causes customer class constructor to throw CustomerException or contain an invalid customer code (passed by another class).
-	 * @throws LogHandlerException - If there was a problem parsing the line from the log file, the line has invalid number of parameters, or other unspecified exceptions such as accessing invalid index.
+	 * @throws LogHandlerException - If there was a problem with the log file not related to the semantic errors above such as parsing errors and invalid number of parameters, or if there are other exceptions not specified such as accessing invalid index.
 	 */
 	public static Customer createCustomer(String line) throws CustomerException, LogHandlerException{
 		//Throw a LogHandlerException if the line is empty or has no comma
@@ -139,7 +139,7 @@ public class LogHandler {
 	 * @return- A Pizza object containing the information from the line in the log file
 	 * @throws PizzaException If the log file contains semantic errors leading that violate the pizza constraints listed in Section 5.3
 	 * of the Assignment Specification or contain an invalid pizza code (passed by another class).
-	 * @throws LogHandlerException - If there was a problem parsing the line from the log file.
+	 * @throws LogHandlerException - If there was a problem with the log file not related to the semantic errors above such as parsing errors and invalid number of parameters, or if there are other exceptions not specified such as accessing invalid index.
 	 */
 	public static Pizza createPizza(String line) throws PizzaException, LogHandlerException{
 		//Throw exception if the line passed is empty or contains no commas

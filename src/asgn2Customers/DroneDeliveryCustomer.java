@@ -11,7 +11,7 @@ import asgn2Exceptions.CustomerException;
  *
  */
 public class DroneDeliveryCustomer extends Customer {
-
+	final static String TYPE = "Drone Delivery";
 
 	/**
 	 *  This class represents a customer of the Pizza Palace restaurant that has chosen to have their pizza delivered by 
@@ -34,7 +34,7 @@ public class DroneDeliveryCustomer extends Customer {
 	 * 7. the location is beyond valid distance from the restaurant
 	 * 
 	 */
-	final static String TYPE = "Drone Delivery";
+	
 	public DroneDeliveryCustomer(String name, String mobileNumber, int locationX, int locationY) throws CustomerException {
 		super(name, mobileNumber, locationX, locationY, TYPE);
 	}

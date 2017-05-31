@@ -17,7 +17,7 @@ import asgn2Exceptions.CustomerException;
  */
 
 public class CustomerFactory {
-
+	final static Set<String> CODES= new HashSet<String>(Arrays.asList(new String[]{"PUC", "DNC", "DVC"}));
 	/**
 	 * A method that uses the Factory Method pattern to produce an instance of one of the asgn2Customers.Customer subclasses. 
 	 * Subclasses are created using the customerCode. All valid customer codes are listed in Section 5.3 of the Assignment Specification.
@@ -29,10 +29,9 @@ public class CustomerFactory {
 	 * @param locationX - The customer x location relative to the Pizza Palace Restaurant measured in units of 'blocks' 
 	 * @param locationY  The customer y location relative to the Pizza Palace Restaurant measured in units of 'blocks' 
 	 * @return A valid PickUpCustomer, DriverDeliveryCustomer or DroneDeliveryCustomer depending on the customerCode.
-	 * @throws CustomerException if the customerCode is not one of the three valid codes: PUC, DNC or DVC. 
-	 * Customer exception from the customer classes is re-thrown.  
+	 * @throws CustomerException 1. If the customerCode is not one of the three valid codes: PUC, DNC or DVC. 2. If the customer detail (name, mobileNumber, locationX, locationY) is invalid
 	 */
-		final static Set<String> CODES= new HashSet<String>(Arrays.asList(new String[]{"PUC", "DNC", "DVC"}));
+	
 	public static Customer getCustomer(String customerCode, String name, String mobileNumber, int locationX,  int locationY) throws CustomerException{
 		if(!CODES.contains(customerCode)){
 			throw new CustomerException("Invalid customer code");
