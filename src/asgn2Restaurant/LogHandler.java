@@ -42,7 +42,7 @@ public class LogHandler {
 	 * @return an ArrayList of Customer objects from the information contained in the log file ordered as they appear in the log file. 
 	 * @throws CustomerException If the log file contains semantic errors leading that violate the customer constraints listed in Section 5.3 of the Assignment Specification or contain an invalid customer code (passed by another class).
 	 * @throws LogHandlerException If there was a problem with the log file not related to the semantic errors above
-	 * @throws FileNotFoundException 
+	 * @throws FileNotFoundException
 	 * 
 	 */
 	public static ArrayList<Customer> populateCustomerDataset(String filename) throws CustomerException, LogHandlerException{		 
@@ -67,7 +67,8 @@ public class LogHandler {
 	 * Returns an ArrayList of Pizza objects from the information contained in the log file ordered as they appear in the log file. .
 	 * @param filename The file name of the log file
 	 * @return an ArrayList of Pizza objects from the information contained in the log file ordered as they appear in the log file. .
-	 * @throws PizzaException If the log file contains semantic errors leading that violate the pizza constraints listed in Section 5.3 of the Assignment Specification or contain an invalid pizza code (passed by another class).
+	 * @throws PizzaException If the log file contains semantic errors leading that violate the pizza constraints listed in Section 5.3 of 
+	 * the Assignment Specification or contain an invalid pizza code (passed by another class).
 	 * @throws LogHandlerException If there was a problem with the log file not related to the semantic errors above
 	 * 
 	 */
@@ -135,8 +136,9 @@ public class LogHandler {
 	 * each line is outlined in Section 5.3 of the Assignment Specification.  
 	 * @param line - A line from the log file
 	 * @return- A Pizza object containing the information from the line in the log file
-	 * @throws PizzaException If the log file contains semantic errors leading that violate the pizza constraints listed in Section 5.3 of the Assignment Specification or contain an invalid pizza code (passed by another class).
-	 * @throws LogHandlerException - If there was a problem parsing the line from the log file.
+	 * @throws PizzaException If the log file contains semantic errors leading that violate the pizza constraints listed in Section 5.3
+	 * of the Assignment Specification or contain an invalid pizza code (passed by another class).
+	 * @throws LogHandlerException - If there was a problem parsing each item from the log file.
 	 */
 	public static Pizza createPizza(String line) throws PizzaException, LogHandlerException{
 		//Throw exception if the line passed is empty or contains no commas
