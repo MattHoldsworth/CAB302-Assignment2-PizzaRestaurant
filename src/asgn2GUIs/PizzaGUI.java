@@ -41,17 +41,13 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	
 	
 	private PizzaRestaurant restaurant;
-	
-	/**
-	 * Creates a new Pizza GUI with the specified title 
-	 * @param title - The title for the supertype JFrame
-	 */
+		
 	final static int WIDTH = 900;
 	final static int HEIGHT = 400;
+	//A format to limit the decimal places for float values
 	final static DecimalFormat decimalFormat = new DecimalFormat("#0.00"); 
-	
+	//A boolean value to indicate whether the log file has been loaded properly
 	Boolean loaded = false;
-	
 	JTable customerTable;
 	JTable pizzaTable;	
 	DefaultTableModel customerModel;
@@ -62,6 +58,10 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	JButton view;
 	JButton total;
 	JButton reset;
+	/**
+	 * Creates a new Pizza GUI with the specified title 
+	 * @param title - The title for the supertype JFrame
+	 */
 	public PizzaGUI(String title) {
 		super(title);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -92,7 +92,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 			}
 		}
 		
-		//Create tables
+		//Create customer and pizza order tables
 		String[] columns = {"Customer Name","Mobile","Type","X/Y location","Delivery Distance"};
 		customerTable = new JTable(new myCustomerModel(columns, 0));
 		displayPanel.add(new JScrollPane(customerTable), BorderLayout.WEST);
@@ -100,7 +100,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		pizzaTable = new JTable(new myCustomerModel(columns2, 0));
 		displayPanel.add(new JScrollPane(pizzaTable), BorderLayout.EAST);
 		
-		//Total value fields
+		//Create total value fields
 		JPanel totalValuePanel = new JPanel();
 		totalValuePanel.setLayout(new FlowLayout());
 		JLabel totalDist = new JLabel("Total Distance:");
@@ -116,7 +116,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		displayPanel.add(totalValuePanel, BorderLayout.SOUTH);		
 		add(displayPanel, BorderLayout.CENTER);
 		
-		//button
+		//Create buttons
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout());	
 		open = new JButton("open");
@@ -161,7 +161,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	}
 
 	public void openFile(){
-		if (loaded == false){		
+		if (!loaded){		
 			JFileChooser fc = new JFileChooser();
 			int returnVal = fc.showOpenDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION){
@@ -170,6 +170,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 				String path = ".\\logs\\" + filenameString;
 					try {
 						restaurant.processLog(path);	
+						//Display a success message and set loaded to true
 						JOptionPane.showMessageDialog(this, "Successfully loaded a log file");
 						loaded = true;
 					} catch (CustomerException e) {
@@ -186,6 +187,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 						loaded = false;
 					}
 			}
+		//If a log file is already loaded, show an error message
 		} else {
 			JOptionPane.showMessageDialog(this, "Please reset before loading another file", "Error",
 				    JOptionPane.ERROR_MESSAGE);
@@ -195,27 +197,29 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	public void updateTables(){
 		try {
 			ArrayList<Object> data = new ArrayList<Object>();
+			int customerOrders, pizzaOrders;
+			//Get reference to the model for customer table and pizza table to edit.
 			customerModel = (DefaultTableModel)customerTable.getModel();
 			pizzaModel = (DefaultTableModel)pizzaTable.getModel();
-			int customerOrders, pizzaOrders;
-			customerOrders = restaurant.getNumCustomerOrders();
-			pizzaOrders = restaurant.getNumPizzaOrders();
 			if (loaded) {
-				for (int i=0; i< customerOrders; i++){
-					Customer customer = restaurant.getCustomerByIndex(i);
-					data.add(customer.getName());
-					data.add(customer.getMobileNumber());
-					data.add(customer.getCustomerType());
-					data.add(customer.getLocationX()+"/"+customer.getLocationY());
-					//Round the distance to 2 decimal places
-					String distanceFormatted = decimalFormat.format(customer.getDeliveryDistance());
-					data.add(distanceFormatted);
-					Object[] row = new Object[data.size()];
-					row = data.toArray(row);
-					customerModel.addRow(row);
-					data.clear();
+				//Fill customer table
+				if ((customerOrders = restaurant.getNumCustomerOrders()) != 0){
+					for (int i=0; i< customerOrders; i++){
+						Customer customer = restaurant.getCustomerByIndex(i);
+						data.add(customer.getName());
+						data.add(customer.getMobileNumber());
+						data.add(customer.getCustomerType());
+						data.add(customer.getLocationX()+"/"+customer.getLocationY());
+						//Round the distance to 2 decimal places
+						String distanceFormatted = decimalFormat.format(customer.getDeliveryDistance());
+						data.add(distanceFormatted + " blocks");
+						Object[] row = new Object[data.size()];
+						row = data.toArray(row);
+						customerModel.addRow(row);
+						data.clear();
+					}
 				}
-				
+				//Fill pizza table
 				if ((pizzaOrders = restaurant.getNumPizzaOrders()) != 0) {
 					for(int i=0; i < pizzaOrders; i++){
 						Pizza pizza = restaurant.getPizzaByIndex(i);
@@ -233,11 +237,11 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 					}
 				}
 				JOptionPane.showMessageDialog(this, "Successfully displayed the data");
+			//If log file is not loaded, throw an error message
 			} else {
 				JOptionPane.showMessageDialog(this, "You must load a log file first", "Error",
 					    JOptionPane.ERROR_MESSAGE);
-			}
-			
+			}			
 		} catch (CustomerException e){
 			JOptionPane.showMessageDialog(this, e.getMessage(), "Error displaying customer data",
 				    JOptionPane.ERROR_MESSAGE);
@@ -257,7 +261,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		if (loaded){
 			//Update total delivery distance
 			String totalDistanceFormatted = decimalFormat.format(restaurant.getTotalDeliveryDistance());
-			totalDistance.setText(totalDistanceFormatted);
+			totalDistance.setText(totalDistanceFormatted + " blocks");
 			//Update total profit
 			String totalProfitFormatted = decimalFormat.format(restaurant.getTotalProfit());
 			totalProfit.setText('$'+totalProfitFormatted);
@@ -284,6 +288,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 			totalProfit.setText("");
 			JOptionPane.showMessageDialog(this, "Reset successful");
 			loaded = false;
+		//If not loaded, throw an error message
 		} else {
 			JOptionPane.showMessageDialog(this,"You must load a log file first", "Error",
 				    JOptionPane.ERROR_MESSAGE);

@@ -23,7 +23,13 @@ public class PickUpCustomer extends Customer {
 	 * @param mobileNumber - The customer mobile number
 	 * @param locationX - The customer x location relative to the Pizza Palace Restaurant measured in units of 'blocks' 
 	 * @param locationY  The customer y location relative to the Pizza Palace Restaurant measured in units of 'blocks' 
-	 * @throws CustomerException if supplied parameters are invalid
+	 * @throws CustomerException if:
+	 * 1. the length of the name is below 0 or more than 20,
+	 * 2. the name contains characters other than alphabet and spaces,
+	 * 3. the name contains only white spaces
+	 * 5. the mobile number length is not 10, does not begin with 0 or contains characters other than numbers
+	 * 6. the locationX and location Y are not 0
+	 * 7. the location is beyond valid distance from the restaurant
 	 * 
 	 */
 	final static String TYPE = "Pick Up";

@@ -26,6 +26,7 @@ public class PizzaTests {
 	static final int MAXIMUM_DELIVERY_TIME = 60;
 	static final int MAXIMUM_QUANTITY = 10;
 	static final int MINIMUM_QUANTITY = 1;
+	//Set the cost for each type of pizzas. 
 	static final double MARGHERITA_COST = PizzaTopping.TOMATO.getCost() + PizzaTopping.CHEESE.getCost();
 	static final double VEGETARIAN_COST = PizzaTopping.TOMATO.getCost() + PizzaTopping.CHEESE.getCost()
 										+ PizzaTopping.EGGPLANT.getCost() + PizzaTopping.MUSHROOM.getCost()
@@ -288,7 +289,7 @@ public class PizzaTests {
 		vegetarian = new VegetarianPizza(quantity, orderTime, deliveryTime);
 	}
 	
-	//If the delivery is made after 1 hour
+	//If the delivery is made after 1 hour, pizza is thrown out
 	@Test (expected = PizzaException.class)
 	public void margheritaPizzaThrownOut() throws PizzaException{
 		deliveryTime = orderTime.plusMinutes(MAXIMUM_DELIVERY_TIME);

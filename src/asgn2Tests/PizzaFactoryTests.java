@@ -47,7 +47,6 @@ public class PizzaFactoryTests {
 		vegetarian = new VegetarianPizza(quantity, orderTime, deliveryTime);
 	}
 	
-	//Test if exception is thrown when invalid code strings are passed as input.
 	//Test if error is thrown if an empty string is passed
 	@Test (expected = PizzaException.class)
 	public void emptyCodeString() throws PizzaException{

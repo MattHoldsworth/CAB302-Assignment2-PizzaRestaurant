@@ -18,7 +18,16 @@ import asgn2Exceptions.CustomerException;
 */
 public abstract class Customer {
 
-
+	final static int MIN_NAME_LENGTH = 1;
+	final static int MAX_NAME_LENGTH = 20;
+	final static int MOBILE_NUM_LENGTH = 10;
+	final static double RESTAURANT_X = 0;
+	final static double RESTAURANT_Y = 0;
+	String name;
+	String mobileNumber;
+	int locationX;
+	int locationY;
+	String type;
 	/**
 	 *  This class represents a customer of the Pizza Palace restaurant.  A detailed description of the class's fields
 	 *  and parameters is provided in the Assignment Specification, in particular in Section 5.2. 
@@ -33,39 +42,34 @@ public abstract class Customer {
 	 * @param locationX - The customer x location relative to the Pizza Palace Restaurant measured in units of 'blocks' 
 	 * @param locationY - The customer y location relative to the Pizza Palace Restaurant measured in units of 'blocks' 
 	 * @param type - A human understandable description of this Customer type
-	 * @throws CustomerException if supplied parameters are invalid 
-	 * 
+	 * @throws CustomerException if 
+	 * 1. the length of the name is below 0 or more than 20,
+	 * 2. the name contains characters other than alphabet and spaces,
+	 * 3. the name contains only white spaces
+	 * 4. the type is not one of Pick Up, Driver Delivery or Drone Delivery
+	 * 5. the mobile number length is not 10, does not begin with 0 or contains characters other than numbers
+	 * 6. the location does not match the type
+	 * 7. the location is beyond valid distance from the restaurant
 	 */
-	final static int MIN_NAME_LENGTH = 1;
-	final static int MAX_NAME_LENGTH = 20;
-	final static int MOBILE_NUM_LENGTH = 10;
-	final static double RESTAURANT_X = 0;
-	final static double RESTAURANT_Y = 0;
-	String name;
-	String mobileNumber;
-	int locationX;
-	int locationY;
-	String type;
-	//need to get rid of this.
-	//final static Set<String> TYPES= new HashSet<String>(Arrays.asList(new String[]{"Pick Up", "Driver Delivery", "Drone Delivery"}));
 	
 	public Customer(String name, String mobileNumber, int locationX, int locationY, String type) throws CustomerException{
+		//Patterns for string input validation
 		String nameRegex = "[a-zA-Z' ]*[a-zA-Z]+[a-zA-Z ]*";
     	Pattern namePattern = Pattern.compile(nameRegex);
     	Matcher nameMatcher = namePattern.matcher(name);
 		String mobileRegex = "[0-9]+";
 		Pattern mobilePattern = Pattern.compile(mobileRegex);
     	Matcher mobileMatcher = mobilePattern.matcher(mobileNumber);
-			//Throw exception if length of the name is 0, or more than 20
+		//Throw exception if length of the name is 0, or more than 20
 		if ((name.length()<MIN_NAME_LENGTH) || (name.length()>MAX_NAME_LENGTH)){
 			throw new CustomerException("Invalid customer name length");
-			//Throw exception if the name contains characters other than alphabet or spaces and when there are only white spaces
+		//Throw exception if the name contains characters other than alphabet or spaces and when there are only white spaces
 		} else if (!nameMatcher.matches()){
 			throw new CustomerException("Invalid customer name: Contains non alphabet characters");
-			//Throw exception if the the type is not valid
+		//Throw exception if the the type is not valid
 		} else if (!type.equals("Pick Up") && !type.equals("Driver Delivery") && !type.equals("Drone Delivery")){
 			throw new CustomerException("Invalid customer type");
-			//if the length of the mobile number is not 10, or if the mobile number does not start with '0' or if the string contains non-numeric characters
+		//if the length of the mobile number is not 10, or if the mobile number does not start with '0' or if the string contains non-numeric characters
 		} else if (mobileNumber.length()!= MOBILE_NUM_LENGTH || mobileNumber.toCharArray()[0] != '0' || !mobileMatcher.matches()){
 			throw new CustomerException("Invalid mobile number");
 		} else if (type == "Pick Up"){

@@ -29,7 +29,8 @@ public class CustomerFactory {
 	 * @param locationX - The customer x location relative to the Pizza Palace Restaurant measured in units of 'blocks' 
 	 * @param locationY  The customer y location relative to the Pizza Palace Restaurant measured in units of 'blocks' 
 	 * @return A valid PickUpCustomer, DriverDeliveryCustomer or DroneDeliveryCustomer depending on the customerCode.
-	 * @throws CustomerException if the customerCode is not one of the three valid codes listed in Section 5.3 of the Assignment Specification. 
+	 * @throws CustomerException if the customerCode is not one of the three valid codes: PUC, DNC or DVC. 
+	 * Customer exception from the customer classes is re-thrown.  
 	 */
 		final static Set<String> CODES= new HashSet<String>(Arrays.asList(new String[]{"PUC", "DNC", "DVC"}));
 	public static Customer getCustomer(String customerCode, String name, String mobileNumber, int locationX,  int locationY) throws CustomerException{

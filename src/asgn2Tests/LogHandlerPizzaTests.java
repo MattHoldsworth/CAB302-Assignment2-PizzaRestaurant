@@ -24,10 +24,6 @@ import asgn2Restaurant.LogHandler;
 * 
 */
 
-
-//Note that the objects in both ArrayLists should in
-//the same order that they appear in the log file
-
 public class LogHandlerPizzaTests {
 	String orderTimeString;
 	String deliveryTimeString;
