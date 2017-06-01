@@ -1,0 +1,329 @@
+* c6a7853 : final change
+* 10b6155 : Updated comments
+* 6f1e3c3 : removed filenotfound exception
+*   358e747 : Merge remote-tracking branch 'origin/master'
+|\  
+| * 920e742 : Re generated javadocs with appropriate comments and author
+* | c05b81f : Commented and changed method descriptions
+|/  
+* be41825 : Minor edits and comments - had to commit so i could access the latest version tomorrow at class
+* 9fd07ee : Fixed some problems in the gui
+*   f7afdd0 : Merge branch 'master' of https://Hemel7@bitbucket.org/Hemel7/cab302assignment2.git
+|\  
+| * cafbc12 : all classes implemented. all tests now pass except 2 fails in LogHandlerCustomerTests related to out of range locationX and Y.
+| * d76f21b : minor fixes, all restaurant pizza tests now pass
+| * c585f0d : edit to GUI to reinclude a condition i chopped out. edits to pizza restaurant to pass tests. 3 errors left in restaurantpizzatests related to out of range exceptions on 'pizzas' and 'customers' arraylists
+* | 547ac2d : Refactored and added some less important test cases.
+|/  
+* cc8e46e : Update to include pizza functionality in GUI
+* 7f61624 : latest edits, minor typos fixed in restaurant tests, 12 out of 20 tests pass
+* a2a69eb : implemented LogHandler, LogHandler Tests and Pizza Restaurant, added name
+* 5c1cfec : Populate data set for pizza and createPizza implemented
+* 43f51b2 : Fixed code in pizza class and minor errors in pizza test class. all pizza class tests are successful except one for class dependency. Not sure if this is because of the test itself.
+* f13eb66 : Fixes to customer factory tests, all 10 working
+* 194b02a : Final fixes to customer class tests. All tests working
+* 508763a : Minor fixes to customer class tests. 8 errors still remain
+* 75ad536 : Hopefully made the correct changes to customer and customerfactory test classes
+* 260a41e : Added some comments for the errors in the customer test and customer factory test.
+* a64eee9 : Eleventh Commit - Pizza factory
+* 0e4481b : Tenth Commit - updates to pizza class to remove logic around 'type', minor edit to customertests
+* 921db8c : Implemented the GUI
+* e55f41a : EIGHTH COMMIT - some customer factory tests
+* 0e63d4d : Revert "Revert "SEVENTH COMMIT - A bunch of customer class tests""
+* c46bed3 : Revert "SEVENTH COMMIT - A bunch of customer class tests"
+* a1aca2b : SEVENTH COMMIT - A bunch of customer class tests
+* 840a076 : Added Log Files for testing LogHandlerPizzaTest and PizzaRestaurantTest. Updated pizza related tests
+* 230e169 : pizza class and subclasses - still needs exceptions for invalid input
+* ccc6e96 : Fifth Commit Implemented customer classes, CustomerFactory class, logHandler customer methods, PizzaRestaurant customer methods. Updated RestaurantPizzaTests
+* c614610 : Fourth Commit Corrected function argument values for test cases in PizzaTest. Updated PizzaFactoryTests Updated LogHandlerPizzaTests Updated RestaurantPizzaTests
+* 257ac7d : Third Commit -Updated PizzaTests (slight changes in test method names) -Implemented LogHandlerPizzaTests
+* 0c1f2e6 : Second Commit PizzaFactoryTests
+* 7aecbc6 : Initial Commit PizzaTests class
+* 434d3ad : .
+* f748592 : .
+* dfba347 : .
+* e951c1e : .commit c6a78533a0a403fa9a2cadb529bdc8050f8a4d14
+Author: Daniel <danieljee123@gmail.com>
+Date:   Thu Jun 1 21:38:13 2017 +1000
+
+    final change
+
+commit 10b6155a615d0dc4556d3cc5b3084b1f95ab6681
+Author: Daniel <danieljee123@gmail.com>
+Date:   Wed May 31 20:28:32 2017 +1000
+
+    Updated comments
+
+commit 6f1e3c3fcdb5d5b9d689a96256590a3fb584e07a
+Author: Daniel <danieljee123@gmail.com>
+Date:   Wed May 31 18:49:49 2017 +1000
+
+    removed filenotfound exception
+
+commit 358e7478697aecb046e95c04a5c441e548185d40
+Merge: c05b81f 920e742
+Author: Daniel <danieljee123@gmail.com>
+Date:   Wed May 31 18:35:18 2017 +1000
+
+    Merge remote-tracking branch 'origin/master'
+    
+    Conflicts:
+            src/asgn2Restaurant/LogHandler.java
+
+commit c05b81f60ec380639d5f91b1b1dfad5e80a51dd4
+Author: Daniel <danieljee123@gmail.com>
+Date:   Wed May 31 17:48:32 2017 +1000
+
+    Commented and changed method descriptions
+
+commit 920e742430a7e4e8c5ad4ffcef00640c5034c445
+Author: Matt <mattholdsworth90@gmail.com>
+Date:   Wed May 31 17:15:33 2017 +1000
+
+    Re generated javadocs with appropriate comments and author
+
+commit be41825074d7ac2cdd24672d80339344b7b10c0e
+Author: DESKTOP-B3DNIC0\Matt <mattholdsworth90@gmail.com>
+Date:   Wed May 24 03:50:14 2017 +1000
+
+    Minor edits and comments - had to commit so i could access the latest
+    version tomorrow at class
+
+commit 9fd07ee28ebbcb19978e6ff8833895c2f072c17e
+Author: Daniel <danieljee123@gmail.com>
+Date:   Sun May 21 20:51:24 2017 +1000
+
+    Fixed some problems in the gui
+
+commit f7afdd0d18890bb01e032de91b704aa91c23c47a
+Merge: 547ac2d cafbc12
+Author: Daniel <danieljee123@gmail.com>
+Date:   Sun May 21 19:05:46 2017 +1000
+
+    Merge branch 'master' of https://Hemel7@bitbucket.org/Hemel7/cab302assignment2.git
+
+commit 547ac2d9bb7b491d2ed29dae0e176ebcdcadf97f
+Author: Daniel <danieljee123@gmail.com>
+Date:   Sun May 21 19:05:18 2017 +1000
+
+    Refactored and added some less important test cases.
+
+commit cafbc12e94dd3492c1188ba9e5107c8569c746ba
+Author: DESKTOP-B3DNIC0\Matt <mattholdsworth90@gmail.com>
+Date:   Sun May 21 03:31:41 2017 +1000
+
+    all classes implemented. all tests now pass except 2 fails in
+    LogHandlerCustomerTests related to out of range locationX and Y.
+    
+    Distance output on GUI has too many decimals.
+    
+    GUI needs to lose a scroll bar.
+    
+    String type needs to be removed from Customer class logic.
+    
+    Still needs javadocs, comments and style editing
+
+commit d76f21b2701db5fd5431c72f4599e8c0efa18ec8
+Author: DESKTOP-B3DNIC0\Matt <mattholdsworth90@gmail.com>
+Date:   Sun May 21 02:20:52 2017 +1000
+
+    minor fixes, all restaurant pizza tests now pass
+
+commit c585f0d708d3aa5a3c931974154cc7ac4d83e845
+Author: DESKTOP-B3DNIC0\Matt <mattholdsworth90@gmail.com>
+Date:   Sat May 20 22:55:48 2017 +1000
+
+    edit to GUI to reinclude a condition i chopped out. edits to pizza
+    restaurant to pass tests. 3 errors left in restaurantpizzatests related
+    to out of range exceptions on 'pizzas' and 'customers' arraylists
+
+commit cc8e46e49ab8677f0f23258d897054fc4a509c62
+Author: DESKTOP-B3DNIC0\Matt <mattholdsworth90@gmail.com>
+Date:   Sat May 20 19:12:08 2017 +1000
+
+    Update to include pizza functionality in GUI
+
+commit 7f61624c19b90605314aa1244f3c71532e9fa8aa
+Author: DESKTOP-B3DNIC0\Matt <mattholdsworth90@gmail.com>
+Date:   Sat May 20 00:35:52 2017 +1000
+
+    latest edits, minor typos fixed in restaurant tests, 12 out of 20 tests
+    pass
+
+commit a2a69eb6eeb56c61eeb5dc98448c019ef320a24e
+Author: DESKTOP-B3DNIC0\Matt <mattholdsworth90@gmail.com>
+Date:   Fri May 19 22:25:05 2017 +1000
+
+    implemented LogHandler, LogHandler Tests and Pizza Restaurant, added
+    name
+
+commit 5c1cfec66e5ccbdf123631c579b8bb10c0962d12
+Author: DESKTOP-B3DNIC0\Matt <mattholdsworth90@gmail.com>
+Date:   Fri May 19 18:47:23 2017 +1000
+
+    Populate data set for pizza and createPizza implemented
+
+commit 43f51b23c62cd1514169f5485c36bc7623a74b5c
+Author: DESKTOP-B3DNIC0\Matt <mattholdsworth90@gmail.com>
+Date:   Fri May 19 02:10:18 2017 +1000
+
+    Fixed code in pizza class and minor errors in pizza test class. all
+    pizza class tests are successful except one for class dependency. Not
+    sure if this is because of the test itself.
+
+commit f13eb6647a4530380ebe9c36b372357d0dfd2ac3
+Author: DESKTOP-B3DNIC0\Matt <mattholdsworth90@gmail.com>
+Date:   Thu May 18 19:30:29 2017 +1000
+
+    Fixes to customer factory tests, all 10 working
+
+commit 194b02afa71c4326b3f5134a1ef5d892dfcd5c66
+Author: DESKTOP-B3DNIC0\Matt <mattholdsworth90@gmail.com>
+Date:   Thu May 18 19:12:03 2017 +1000
+
+    Final fixes to customer class tests.
+    All tests working
+
+commit 508763af2ad554a03822d8abf04b4a8af5e65335
+Author: Matt <mattholdsworth90@gmail.com>
+Date:   Wed May 17 17:31:15 2017 +1000
+
+    Minor fixes to customer class tests. 8 errors still remain
+
+commit 75ad536eb434dcc3e3b5864cc79bb629d2c1f96d
+Author: DESKTOP-B3DNIC0\Matt <mattholdsworth90@gmail.com>
+Date:   Tue May 16 20:47:09 2017 +1000
+
+    Hopefully made the correct changes to customer and customerfactory test
+    classes
+
+commit 260a41e9fb93f7b263635fc9f6886090a84fb281
+Author: Daniel <danieljee123@gmail.com>
+Date:   Tue May 16 11:56:14 2017 +1000
+
+    Added some comments for the errors in the customer test and customer
+    factory test.
+
+commit a64eee90ccd888ed39051a452cf5c3798fddc47f
+Author: DESKTOP-B3DNIC0\Matt <mattholdsworth90@gmail.com>
+Date:   Mon May 15 22:14:56 2017 +1000
+
+    Eleventh Commit - Pizza factory
+
+commit 0e4481bac393e48ce5bbfe338412f9bd042e1fb8
+Author: DESKTOP-B3DNIC0\Matt <mattholdsworth90@gmail.com>
+Date:   Mon May 15 21:25:14 2017 +1000
+
+    Tenth Commit - updates to pizza class to remove logic around 'type',
+    minor edit to customertests
+
+commit 921db8ca0c2779d41a3a3314d1100c990f9d2da3
+Author: Daniel <danieljee123@gmail.com>
+Date:   Mon May 15 11:16:28 2017 +1000
+
+    Implemented the GUI
+
+commit e55f41a1aaa1183ba188963214a2248066b70d27
+Author: DESKTOP-B3DNIC0\Matt <mattholdsworth90@gmail.com>
+Date:   Mon May 15 01:12:29 2017 +1000
+
+    EIGHTH COMMIT - some customer factory tests
+
+commit 0e63d4db4f51b68d2bc2f8c3412b1b466a4e0e9b
+Author: DESKTOP-B3DNIC0\Matt <mattholdsworth90@gmail.com>
+Date:   Sun May 14 23:07:08 2017 +1000
+
+    Revert "Revert "SEVENTH COMMIT - A bunch of customer class tests""
+    
+    This reverts commit c46bed30fc52736b79d283c8f25561b50033488a.
+
+commit c46bed30fc52736b79d283c8f25561b50033488a
+Author: DESKTOP-B3DNIC0\Matt <mattholdsworth90@gmail.com>
+Date:   Sun May 14 23:02:18 2017 +1000
+
+    Revert "SEVENTH COMMIT - A bunch of customer class tests"
+    
+    This reverts commit a1aca2b6e75cec298fe79dd5ae1c63e0a7302fe6.
+
+commit a1aca2b6e75cec298fe79dd5ae1c63e0a7302fe6
+Author: DESKTOP-B3DNIC0\Matt <mattholdsworth90@gmail.com>
+Date:   Sun May 14 22:57:18 2017 +1000
+
+    SEVENTH COMMIT - A bunch of customer class tests
+
+commit 840a0763adcbd09d3dfac2a02d183117173cc3a5
+Author: Daniel <danieljee123@gmail.com>
+Date:   Fri May 12 16:03:08 2017 +1000
+
+    Added Log Files for testing LogHandlerPizzaTest and PizzaRestaurantTest.
+    Updated pizza related tests
+
+commit 230e16972ed0a81b9da5493e27db33f68fdc374f
+Author: Matt <mattholdsworth90@gmail.com>
+Date:   Wed May 10 17:13:05 2017 +1000
+
+    pizza class and subclasses - still needs exceptions for invalid input
+
+commit ccc6e967fb33deaa2827923e76d3ea813c08dc58
+Author: Daniel <danieljee123@gmail.com>
+Date:   Mon May 8 13:21:51 2017 +1000
+
+    Fifth Commit
+    Implemented customer classes, CustomerFactory class, logHandler customer
+    methods, PizzaRestaurant customer methods. Updated RestaurantPizzaTests
+
+commit c6146107b3de3d76e25f98d6a25025447fa43026
+Author: Daniel <danieljee123@gmail.com>
+Date:   Wed May 3 23:00:21 2017 +1000
+
+    Fourth Commit
+    Corrected function argument values for test cases in PizzaTest.
+    Updated PizzaFactoryTests
+    Updated LogHandlerPizzaTests
+    Updated RestaurantPizzaTests
+
+commit 257ac7db4518ce25179c4db4b4f70d43e70f1869
+Author: Daniel <danieljee123@gmail.com>
+Date:   Sat Apr 29 18:45:36 2017 +1000
+
+    Third Commit
+    -Updated PizzaTests (slight changes in test method names)
+    -Implemented LogHandlerPizzaTests
+
+commit 0c1f2e65dfb925eeb2df9b7c427bc3bb3f47ab80
+Author: Daniel <danieljee123@gmail.com>
+Date:   Sat Apr 29 11:50:16 2017 +1000
+
+    Second Commit
+    PizzaFactoryTests
+
+commit 7aecbc69bceac59dc1a6ee73e0cd1117663f2405
+Author: Daniel <danieljee123@gmail.com>
+Date:   Sat Apr 29 10:06:15 2017 +1000
+
+    Initial Commit
+    PizzaTests class
+
+commit 434d3ada012f0e03d37b9527d8f9bdff01ca572b
+Author: alan <awoodley@qut.edu.au>
+Date:   Tue Apr 25 18:36:28 2017 +1000
+
+    .
+
+commit f748592b2f1fe58edc493dfacce042ef85c91244
+Author: alan <awoodley@qut.edu.au>
+Date:   Tue Apr 25 18:05:34 2017 +1000
+
+    .
+
+commit dfba34718a2fd75e1bc3721b8770c7466003ab56
+Author: alan <awoodley@qut.edu.au>
+Date:   Tue Apr 25 18:04:54 2017 +1000
+
+    .
+
+commit e951c1e8b6ea69b11df52b6f3f175173c920375e
+Author: awoodley <a.woodley@qut.edu.au>
+Date:   Tue Apr 25 06:32:36 2017 +0000
+
+    .
