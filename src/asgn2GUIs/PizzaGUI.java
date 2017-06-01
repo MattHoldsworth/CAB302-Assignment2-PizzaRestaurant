@@ -140,13 +140,11 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	}
 
 	
-	@Override
 	public void run() {
 		restaurant = new PizzaRestaurant();
 	}
 
 
-	@Override
 	public void actionPerformed(ActionEvent e) {
 		String buttonString = e.getActionCommand();
 		if (buttonString == "open"){
