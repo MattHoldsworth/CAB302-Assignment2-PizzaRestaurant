@@ -55,6 +55,7 @@ public class CustomerFactoryTests {
 		CustomerFactory.getCustomer("", name, mobileNumber, locationX, locationY);
 	}
 	
+	//Test if error is thrown when incorrect customer code is passed
 	@Test (expected = CustomerException.class)
 	public void singleCharacterString() throws CustomerException {
 		CustomerFactory.getCustomer("D", name, mobileNumber, locationX, locationY);
@@ -100,6 +101,7 @@ public class CustomerFactoryTests {
 	
 	@Test
 	public void instantiatePickUpCustomer() throws CustomerException {
+		//location for pickup customer must be (0,0)
 		locationX = RESTAURANT_X;
 		locationY = RESTAURANT_Y;
 		Customer pickUpCustomer2 = CustomerFactory.getCustomer(PICKUP, name, mobileNumber, locationX, locationY);

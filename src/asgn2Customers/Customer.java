@@ -28,6 +28,7 @@ public abstract class Customer {
 	int locationX;
 	int locationY;
 	String type;
+	
 	/**
 	 *  This class represents a customer of the Pizza Palace restaurant.  A detailed description of the class's fields
 	 *  and parameters is provided in the Assignment Specification, in particular in Section 5.2. 
@@ -51,7 +52,6 @@ public abstract class Customer {
 	 * 6. the location does not match the type
 	 * 7. the location is beyond valid distance from the restaurant
 	 */
-	
 	public Customer(String name, String mobileNumber, int locationX, int locationY, String type) throws CustomerException{
 		//Patterns for string input validation
 		String nameRegex = "[a-zA-Z' ]*[a-zA-Z]+[a-zA-Z ]*";

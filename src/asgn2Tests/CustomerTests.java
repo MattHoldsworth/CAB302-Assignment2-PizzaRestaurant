@@ -52,6 +52,7 @@ public class CustomerTests {
 		droneDeliveryCustomer = new DroneDeliveryCustomer(name, mobileNumber, locationX, locationY);
 	}//end SetUp
 	
+	//Tests if error is thrown when an invalid name is entered
 	@Test
 	public void driverNameMaximum() throws CustomerException {
 		name = "Twentycharactersssss";
@@ -98,7 +99,7 @@ public class CustomerTests {
 		assertEquals (MIN_NAME_LENGTH, pickUpCustomer.getName().length());
 	}
 	
-	//Border value tests for name
+	//Border value tests for name variable
 	@Test (expected = CustomerException.class)
 	public void NoNameDriverCustomer() throws CustomerException {
 		name = "";
@@ -190,26 +191,6 @@ public class CustomerTests {
 		pickUpCustomer = new PickUpCustomer(name, mobileNumber, locationX, locationY);
 	}
 	
-	//Tests for non-numeric characters in mobile number
-	@Test (expected = CustomerException.class)
-	public void NotNumbersDriverCustomer() throws CustomerException {
-		mobileNumber = "ABCDEFGHIJ";
-		driverDeliveryCustomer = new DriverDeliveryCustomer(name, mobileNumber, locationX, locationY);
-	}
-	
-	@Test (expected = CustomerException.class)
-	public void NotNumbersDroneCustomer() throws CustomerException {
-		mobileNumber = "ABCDEFGHIJ";
-		droneDeliveryCustomer = new DroneDeliveryCustomer(name, mobileNumber, locationX, locationY);
-	}
-	
-	@Test (expected = CustomerException.class)
-	public void NotNumbersPickUpCustomer() throws CustomerException {
-		mobileNumber = "ABCDEFGHIJ";
-		pickUpCustomer = new PickUpCustomer(name, mobileNumber, locationX, locationY);
-	}
-	
-	//Tests for mobile number length
 	@Test
 	public void driverMobileNumberLengthStored() throws CustomerException {
 		driverDeliveryCustomer = new DriverDeliveryCustomer(name, mobileNumber, locationX, locationY);
@@ -230,6 +211,25 @@ public class CustomerTests {
 		assertEquals (MOBILE_NUM_LENGTH, pickUpCustomer.getMobileNumber().length());
 	}
 	
+	//Tests for non-numeric characters in mobile number
+	@Test (expected = CustomerException.class)
+	public void NotNumbersDriverCustomer() throws CustomerException {
+		mobileNumber = "ABCDEFGHIJ";
+		driverDeliveryCustomer = new DriverDeliveryCustomer(name, mobileNumber, locationX, locationY);
+	}
+	
+	@Test (expected = CustomerException.class)
+	public void NotNumbersDroneCustomer() throws CustomerException {
+		mobileNumber = "ABCDEFGHIJ";
+		droneDeliveryCustomer = new DroneDeliveryCustomer(name, mobileNumber, locationX, locationY);
+	}
+	
+	@Test (expected = CustomerException.class)
+	public void NotNumbersPickUpCustomer() throws CustomerException {
+		mobileNumber = "ABCDEFGHIJ";
+		pickUpCustomer = new PickUpCustomer(name, mobileNumber, locationX, locationY);
+	}
+	
 	//Border value tests for locationX
 	@Test
 	public void driverLocationXMinimum() throws CustomerException {
@@ -245,9 +245,9 @@ public class CustomerTests {
 		assertEquals (MIN_LOCATION_X, droneDeliveryCustomer.getLocationX());
 	}
 
-	//Pick up customer's location should always be 0, 0
 	@Test
 	public void pickUpLocationXMinimum() throws CustomerException {
+		//Pick up customer's location should always be (0,0)
 		locationX = RESTAURANT_X;
 		locationY = RESTAURANT_Y;
 		pickUpCustomer = new PickUpCustomer(name, mobileNumber, locationX, locationY);
